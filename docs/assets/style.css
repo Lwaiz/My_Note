@@ -141,13 +141,26 @@ a:hover {
 /* ========== 页面头部和底部 ========== */
 .site-header,
 .site-footer {
-  max-width: 1400px;
+  max-width: unset;
   margin: 0 auto;
   padding: 24px 20px;
 }
 
 .site-header {
   padding-top: 32px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  background: rgba(var(--bg-overlay-rgb), 0.0);    /*transparent;*/
+  border-bottom: 0px solid var(--chip-border);
+  transition: transform 0.22s ease;
+  /* ========== 高级感渐变下边缘 ========== */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.site-header.is-hidden {
+  transform: translateY(calc(-100% - 8px));
 }
 
 .site-header-top {
@@ -166,6 +179,32 @@ a:hover {
 .site-header h1 {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.brand-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+}
+
+.brand-link:hover {
+  text-decoration: none;
+}
+
+.brand-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 20%;
+  object-fit: cover;
+  border: 0px solid var(--chip-hover-bg);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
 }
 
 .site-header p,
@@ -651,3 +690,55 @@ a:hover {
   color: var(--muted);
   font-size: 0.95rem;
 }
+
+
+/* =======================================
+ * APlayer 音乐播放器 自定义样式
+ * 功能：毛玻璃美化 + 可拖拽 + 可缩放
+ * ======================================= */
+
+/* 播放器主体样式 */
+.aplayer {
+  background: rgba(var(--bg-overlay-rgb), 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--chip-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+
+  /* 允许拖拽、允许缩放 */
+  cursor: move;
+  resize: both;
+  overflow: auto;
+  min-width: 280px;   /* 最小宽度，不能缩太小 */
+  min-height: 60px;    /* 最小高度 */
+  max-width: 450px;   /* 最大宽度 */
+  max-height: 120px;  /* 最大高度 */
+}
+
+/* 悬浮定位初始位置 */
+.aplayer-fixed {
+  position: fixed !important;
+  z-index: 999 !important;
+  right: 16px;
+  bottom: 16px;
+}
+
+/* 歌曲信息区域透明 */
+.aplayer .aplayer-info {
+  background: transparent !important;
+}
+
+/* 歌名、歌手文字适配主题色 */
+.aplayer .aplayer-title,
+.aplayer .aplayer-author {
+  color: var(--text) !important;
+}
+
+/* 右下角缩放小三角更明显 */
+.aplayer::-webkit-resizer {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 0 0 12px 0;
+}
+
+
+

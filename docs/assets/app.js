@@ -6,6 +6,7 @@ const profileMarkdownContainer = document.getElementById('profile-markdown');
 const postMeta = document.getElementById('post-meta');
 const searchInput = document.getElementById('site-search');
 const themeToggle = document.getElementById('theme-toggle');
+const siteHeader = document.querySelector('.site-header');
 const THEME_STORAGE_KEY = 'preferred-theme';
 const THEME_ORDER = ['light', 'dark', 'eye'];
 const ALLOWED_THEMES = new Set(THEME_ORDER);
@@ -17,6 +18,7 @@ const THEME_META = {
 
 let allPosts = [];
 let currentTheme = 'light';
+let currentSeriesFilter = '';
 
 function applyTheme(theme) {
   currentTheme = ALLOWED_THEMES.has(theme) ? theme : 'light';
@@ -38,6 +40,26 @@ function setupThemeSwitcher() {
     applyTheme(nextTheme);
     localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   });
+}
+
+function setupAutoHideHeader() {
+  if (!siteHeader) return;
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 8) {
+      siteHeader.classList.remove('is-hidden');
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    if (currentScrollY > lastScrollY + 4) {
+      siteHeader.classList.add('is-hidden');
+    } else if (currentScrollY < lastScrollY - 4) {
+      siteHeader.classList.remove('is-hidden');
+    }
+    lastScrollY = currentScrollY;
+  }, { passive: true });
 }
 
 async function loadJSON(path) {
@@ -80,11 +102,15 @@ function normalizeImageSrc(src, baseDir) {
 
 function filterPosts(query) {
   query = query.trim().toLowerCase();
+  const basePosts = currentSeriesFilter
+    ? allPosts.filter(post => post.series === currentSeriesFilter)
+    : allPosts;
+
   if (!query) {
-    displayPostCards(allPosts);
+    displayPostCards(basePosts);
     return;
   }
-  const filtered = allPosts.filter(post => {
+  const filtered = basePosts.filter(post => {
     const subject = `${post.title} ${post.description || ''}`.toLowerCase();
     return subject.includes(query);
   });
@@ -138,7 +164,7 @@ function populateSeries(posts) {
     return;
   }
   seriesEl.innerHTML = Array.from(seriesMap.entries()).map(([name, info]) => {
-    const jumpLink = `post.html?post=${encodeURIComponent(info.firstSlug)}`;
+    const jumpLink = `index.html?series=${encodeURIComponent(name)}#series`;
     return `
       <article class="series-card">
         <h3><a href="${jumpLink}">${name}</a></h3>
@@ -168,7 +194,17 @@ async function renderPostList() {
   try {
     const data = await loadJSON('notes/posts.json');
     allPosts = data.posts || [];
-    displayPostCards(allPosts);
+    currentSeriesFilter = getQueryParam('series') || '';
+    const initialPosts = currentSeriesFilter
+      ? allPosts.filter(post => post.series === currentSeriesFilter)
+      : allPosts;
+    displayPostCards(initialPosts);
+
+    const introTitle = document.querySelector('.intro h2');
+    if (introTitle && currentSeriesFilter) {
+      introTitle.textContent = `文章列表（系列：${currentSeriesFilter}）`;
+    }
+
     populateArchive(allPosts);
     populateCategories(allPosts);
     populateSeries(allPosts);
@@ -294,12 +330,15 @@ async function renderProfilePage() {
 }
 
 if (isPostPage) {
+  setupAutoHideHeader();
   setupThemeSwitcher();
   renderMarkdownPost();
 } else if (isProfilePage) {
+  setupAutoHideHeader();
   setupThemeSwitcher();
   renderProfilePage();
 } else {
+  setupAutoHideHeader();
   setupThemeSwitcher();
   renderPostList();
   setupSearch();

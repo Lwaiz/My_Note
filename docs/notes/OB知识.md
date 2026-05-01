@@ -59,7 +59,7 @@ OceanBase 数据库（OceanBase Database）是一款完全自研的企业级原�
 
 ## 产品架构
 
-[blog.csdn.net](https://blog.csdn.net/f80407515/article/details/128225287)
+[https://blog.csdn.net/f80407515/article/details/128225287](https://blog.csdn.net/f80407515/article/details/128225287)
 
 
 OceanBase 社区版数据库内核开源， 与 MySQL 兼容，对接虚拟化和大数据技术及产品，支持多种图形化的开发工具、运维监控工具和数据迁移工具；同时社区版提供开放的接口和丰富的生态能力，支持企业或个人更好的实现定制化业务需求。

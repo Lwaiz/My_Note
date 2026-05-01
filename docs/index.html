@@ -14,8 +14,10 @@
   <header class="site-header">
     <div class="site-header-top">
       <div class="site-brand">
-        <h1>Leo Blog</h1>
-        <p>把你的 Markdown 笔记放到 <code>docs/notes</code>，然后用 GitHub Pages 发布。</p>
+        <h1 class="brand-title">
+          <img src="avatar.png" alt="Leo 头像" class="brand-avatar">
+          <span>Leo Blog</span>
+        </h1>
       </div>
       <div class="site-actions">
         <nav class="site-nav" aria-label="主导航">
@@ -74,7 +76,6 @@
 
     <section id="profile" class="site-section">
       <h2>个人中心</h2>
-      <p>个人资料已经迁移到独立页面，内容由 Markdown 驱动，编辑更方便。</p>
       <p><a href="profile.html" class="back-to-list-button">进入个人中心</a></p>
     </section>
   </main>
@@ -85,5 +86,92 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="assets/app.js"></script>
+
+
+  <!-- Aplayer 音乐播放器 -->
+  <!-- Aplayer 音乐播放器 -->
+
+  <!-- Aplayer 音乐播放器 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+  <!-- 播放器容器 -->
+  <div id="player" class="aplayer-fixed"></div>
+
+  <script>
+    // 屏蔽音频下载扩展弹窗
+    Object.defineProperty(HTMLMediaElement.prototype, 'played', {
+      get: () => { return { length: 0, start: () => {}, end: () => {} }; }
+    });
+
+    // 1. 页面加载时，先清除浏览器记住的音量（关键！）
+    localStorage.removeItem('aplayer-volume');
+
+    const ap = new APlayer({
+        container: document.getElementById('player'),
+        fixed: true,
+        autoplay: false,
+        volume: 0.1,  // 这里是你要的默认音量
+        theme: '#0969da',
+        audio: [
+            {
+                name: "所念皆星河",
+                artist: "房东的猫",
+                url: "https://music.163.com/song/media/outer/url?id=1384026889.mp3",
+                cover: "https://p2.music.126.net/M34HFzLO2xhDLuX_zEALKA==/109951164291347934.jpg"
+            },
+            {
+                name: "菊次郎的夏天",
+                artist: "久石让",
+                url: "https://music.163.com/song/media/outer/url?id=541326593.mp3",
+                cover: "http://p1.music.126.net/8762hSisUAxBEZkq-5EBUg==/109951163163900877.jpg?param=130y130"
+            }
+        ]
+    });
+
+    // 2. 播放器初始化完成后，再强制设置一次音量
+    ap.on('ready', function () {
+      ap.volume(0.1, true); // 第二个参数 true 表示不保存到 localStorage
+    });
+  </script>
+<!-- Aplayer 拖拽移动功能 -->
+<script>
+  (function(){
+    const player = document.getElementById('player');
+    let isDrag = false;
+    let startX, startY, left, top;
+  
+    // 鼠标按下开始拖拽
+    player.addEventListener('mousedown', function(e){
+      // 点进度条、按钮时不触发拖拽
+      if(e.target.closest('.aplayer-bar, .aplayer-button, .aplayer-volume')) return;
+  
+      isDrag = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      left = player.offsetLeft;
+      top = player.offsetTop;
+      player.style.transition = 'none';
+    });
+  
+    // 鼠标移动
+    document.addEventListener('mousemove', function(e){
+      if(!isDrag) return;
+      let dx = e.clientX - startX;
+      let dy = e.clientY - startY;
+      player.style.left = left + dx + 'px';
+      player.style.top = top + dy + 'px';
+      // 取消 right/bottom 固定值，改用 left/top
+      player.style.right = 'auto';
+      player.style.bottom = 'auto';
+    });
+  
+    // 鼠标松开结束拖拽
+    document.addEventListener('mouseup', function(){
+      isDrag = false;
+      player.style.transition = '0.2s ease';
+    });
+  })();
+  </script>
 </body>
 </html>
