@@ -1,10 +1,44 @@
 const isPostPage = window.location.pathname.endsWith('post.html');
+const isProfilePage = window.location.pathname.endsWith('profile.html');
 const postListContainer = document.getElementById('post-list');
 const markdownContainer = document.getElementById('markdown-content');
+const profileMarkdownContainer = document.getElementById('profile-markdown');
 const postMeta = document.getElementById('post-meta');
 const searchInput = document.getElementById('site-search');
+const themeToggle = document.getElementById('theme-toggle');
+const THEME_STORAGE_KEY = 'preferred-theme';
+const THEME_ORDER = ['light', 'dark', 'eye'];
+const ALLOWED_THEMES = new Set(THEME_ORDER);
+const THEME_META = {
+  light: { icon: '☀', label: '日间模式' },
+  dark: { icon: '☾', label: '夜间模式' },
+  eye: { icon: '👁', label: '护眼模式' }
+};
 
 let allPosts = [];
+let currentTheme = 'light';
+
+function applyTheme(theme) {
+  currentTheme = ALLOWED_THEMES.has(theme) ? theme : 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  if (!themeToggle) return;
+  const meta = THEME_META[currentTheme];
+  themeToggle.textContent = meta.icon;
+  themeToggle.setAttribute('aria-label', `${meta.label}，点击切换`);
+  themeToggle.setAttribute('title', `${meta.label}，点击切换`);
+}
+
+function setupThemeSwitcher() {
+  const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  applyTheme(ALLOWED_THEMES.has(storedTheme) ? storedTheme : 'light');
+  if (!themeToggle) return;
+  themeToggle.addEventListener('click', () => {
+    const currentIndex = THEME_ORDER.indexOf(currentTheme);
+    const nextTheme = THEME_ORDER[(currentIndex + 1) % THEME_ORDER.length];
+    applyTheme(nextTheme);
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  });
+}
 
 async function loadJSON(path) {
   const res = await fetch(path);
@@ -91,15 +125,26 @@ function populateSeries(posts) {
   const seriesMap = new Map();
   posts.forEach(post => {
     if (post.series) {
-      seriesMap.set(post.series, (seriesMap.get(post.series) || 0) + 1);
+      const existing = seriesMap.get(post.series);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        seriesMap.set(post.series, { count: 1, firstSlug: post.slug });
+      }
     }
   });
   if (!seriesMap.size) {
     seriesEl.innerHTML = '<p>当前没有系列信息，可在 <code>notes/posts.json</code> 中为文章添加 series 字段。</p>';
     return;
   }
-  seriesEl.innerHTML = Array.from(seriesMap.entries()).map(([name, count]) => {
-    return `<a href="#" class="series-pill">${name} (${count} 篇)</a>`;
+  seriesEl.innerHTML = Array.from(seriesMap.entries()).map(([name, info]) => {
+    const jumpLink = `post.html?post=${encodeURIComponent(info.firstSlug)}`;
+    return `
+      <article class="series-card">
+        <h3><a href="${jumpLink}">${name}</a></h3>
+        <p>该系列共 ${info.count} 篇文章</p>
+      </article>
+    `;
   }).join('');
 }
 
@@ -110,8 +155,9 @@ function setupSearch() {
   });
 }
 
-function fixMarkdownImages(baseDir) {
-  markdownContainer.querySelectorAll('img').forEach(img => {
+function fixMarkdownImages(container, baseDir) {
+  if (!container) return;
+  container.querySelectorAll('img').forEach(img => {
     const src = img.getAttribute('src');
     if (!src) return;
     img.setAttribute('src', normalizeImageSrc(src, baseDir));
@@ -218,9 +264,12 @@ async function renderMarkdownPost() {
     if (!md.ok) throw new Error('Markdown 文件加载失败');
     const text = await md.text();
     markdownContainer.innerHTML = marked.parse(text);
-    fixMarkdownImages(baseDir);
+    fixMarkdownImages(markdownContainer, baseDir);
     buildTOC();
-    postMeta.innerHTML = `<p>${post.date || ''}</p><p><a href="index.html">返回文章列表</a></p>`;
+    postMeta.innerHTML = `
+      <p>${post.date || ''}</p>
+      <p><a href="index.html" class="back-to-list-button">返回文章列表</a></p>
+    `;
     document.title = `${post.title} · 我的 Markdown 博客`;
   } catch (err) {
     markdownContainer.innerHTML = `<p>加载文章失败：${err.message}</p><p><a href="index.html">返回首页</a></p>`;
@@ -228,9 +277,30 @@ async function renderMarkdownPost() {
   }
 }
 
+async function renderProfilePage() {
+  if (!profileMarkdownContainer) return;
+  const filePath = 'notes/profile.md';
+  try {
+    const md = await fetch(filePath);
+    if (!md.ok) throw new Error('个人中心 Markdown 加载失败');
+    const text = await md.text();
+    profileMarkdownContainer.innerHTML = marked.parse(text);
+    fixMarkdownImages(profileMarkdownContainer, 'notes/');
+    document.title = '个人中心 · Leo Blog';
+  } catch (err) {
+    profileMarkdownContainer.innerHTML = `<p>加载个人中心失败：${err.message}</p><p><a href="index.html">返回首页</a></p>`;
+    console.error(err);
+  }
+}
+
 if (isPostPage) {
+  setupThemeSwitcher();
   renderMarkdownPost();
+} else if (isProfilePage) {
+  setupThemeSwitcher();
+  renderProfilePage();
 } else {
+  setupThemeSwitcher();
   renderPostList();
   setupSearch();
 }

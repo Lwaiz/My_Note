@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的 Markdown 博客</title>
+  <title>Leo Blog</title>
   <link rel="stylesheet" href="assets/style.css">
+  <!-- 网站图标设置 -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
 </head>
 <body>
   <header class="site-header">
     <div class="site-header-top">
       <div class="site-brand">
-        <h1>我的 Markdown 博客</h1>
+        <h1>Leo Blog</h1>
         <p>把你的 Markdown 笔记放到 <code>docs/notes</code>，然后用 GitHub Pages 发布。</p>
       </div>
       <div class="site-actions">
@@ -22,10 +26,11 @@
           <a href="#friends">友情链接</a>
         </nav>
         <div class="header-tools">
+          <button type="button" id="theme-toggle" class="theme-btn" aria-label="切换主题模式" title="切换主题模式">☀</button>
           <label class="search-wrap" for="site-search">
             <input type="search" id="site-search" placeholder="搜索文章..." aria-label="搜索文章">
           </label>
-          <a href="#profile" class="profile-link">个人中心</a>
+          <a href="profile.html" class="profile-link">个人中心</a>
         </div>
       </div>
     </div>
@@ -69,12 +74,8 @@
 
     <section id="profile" class="site-section">
       <h2>个人中心</h2>
-      <p>欢迎来到个人中心。这里可以放置你的简介、联系方式和常用入口。</p>
-      <div class="profile-actions">
-        <a href="#" class="profile-action">我的文章</a>
-        <a href="#" class="profile-action">编辑资料</a>
-        <a href="#" class="profile-action">设置</a>
-      </div>
+      <p>个人资料已经迁移到独立页面，内容由 Markdown 驱动，编辑更方便。</p>
+      <p><a href="profile.html" class="back-to-list-button">进入个人中心</a></p>
     </section>
   </main>
 

@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文章阅读 - Leo Blog</title>
+  <title>个人中心 - Leo Blog</title>
   <link rel="stylesheet" href="assets/style.css">
-  <!-- 网站图标设置 -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
 </head>
 <body>
   <header class="site-header">
-    <div class="site-header-top post-header-top">
+    <div class="site-header-top">
       <div class="site-brand">
         <h1><a href="index.html">Leo Blog</a></h1>
+        <p>个人中心单页，内容来自 Markdown。</p>
       </div>
       <div class="site-actions">
-        <nav class="site-nav" aria-label="文章页导航">
+        <nav class="site-nav" aria-label="主导航">
           <a href="index.html">文章</a>
           <a href="index.html#series">系列</a>
           <a href="index.html#archive">归档</a>
@@ -31,26 +31,8 @@
     </div>
   </header>
 
-  <main class="content post-content">
-    <aside class="post-sidebar">
-      <section class="toc-section">
-        <details open>
-          <summary>文章目录</summary>
-          <nav id="post-toc" class="toc-nav"><p>正在生成目录...</p></nav>
-        </details>
-      </section>
-      <section class="post-profile-card">
-        <a href="profile.html" class="post-profile-link">
-          <span class="post-profile-icon" aria-hidden="true">🌐</span>
-          <span class="post-profile-title">个人中心</span>
-          <span class="post-profile-desc">查看个人主页入口与常用功能</span>
-        </a>
-      </section>
-    </aside>
-    <article id="article">
-      <div id="post-meta" class="post-meta"></div>
-      <div id="markdown-content" class="markdown-body">正在加载文章...</div>
-    </article>
+  <main class="content profile-page">
+    <div id="profile-markdown" class="markdown-body">正在加载个人中心...</div>
   </main>
 
   <footer class="site-footer">
