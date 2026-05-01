@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的 Markdown 博客</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-top">
+      <div class="site-brand">
+        <h1>我的 Markdown 博客</h1>
+        <p>把你的 Markdown 笔记放到 <code>docs/notes</code>，然后用 GitHub Pages 发布。</p>
+      </div>
+      <div class="site-actions">
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html">文章</a>
+          <a href="#series">系列</a>
+          <a href="#archive">归档</a>
+          <a href="#categories">分类</a>
+          <a href="#friends">友情链接</a>
+        </nav>
+        <div class="header-tools">
+          <label class="search-wrap" for="site-search">
+            <input type="search" id="site-search" placeholder="搜索文章..." aria-label="搜索文章">
+          </label>
+          <a href="#profile" class="profile-link">个人中心</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <section class="intro">
+      <h2>文章列表</h2>
+      <div id="post-list" class="post-list">正在加载文章...</div>
+    </section>
+
+    <section id="series" class="site-section">
+      <h2>系列</h2>
+      <div id="series-list" class="section-grid">
+        <p>正在加载系列信息...</p>
+      </div>
+    </section>
+
+    <section id="archive" class="site-section">
+      <h2>归档</h2>
+      <div id="archive-list" class="section-grid">
+        <p>正在加载归档...</p>
+      </div>
+    </section>
+
+    <section id="categories" class="site-section">
+      <h2>分类</h2>
+      <div id="categories-list" class="section-grid">
+        <p>正在加载分类...</p>
+      </div>
+    </section>
+
+    <section id="friends" class="site-section">
+      <h2>友情链接</h2>
+      <div class="friend-links">
+        <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://developer.mozilla.org" target="_blank" rel="noreferrer">MDN</a>
+        <a href="https://css-tricks.com" target="_blank" rel="noreferrer">CSS-Tricks</a>
+      </div>
+    </section>
+
+    <section id="profile" class="site-section">
+      <h2>个人中心</h2>
+      <p>欢迎来到个人中心。这里可以放置你的简介、联系方式和常用入口。</p>
+      <div class="profile-actions">
+        <a href="#" class="profile-action">我的文章</a>
+        <a href="#" class="profile-action">编辑资料</a>
+        <a href="#" class="profile-action">设置</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>使用 GitHub Pages 的静态博客演示</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

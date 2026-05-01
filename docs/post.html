@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章阅读 - 我的 Markdown 博客</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1><a href="index.html">我的 Markdown 博客</a></h1>
+  </header>
+
+  <main class="content post-content">
+    <aside class="post-sidebar">
+      <section class="toc-section">
+        <details open>
+          <summary>文章目录</summary>
+          <nav id="post-toc" class="toc-nav"><p>正在生成目录...</p></nav>
+        </details>
+      </section>
+    </aside>
+    <article id="article">
+      <div id="post-meta" class="post-meta"></div>
+      <div id="markdown-content" class="markdown-body">正在加载文章...</div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>使用 GitHub Pages 的静态博客演示</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
