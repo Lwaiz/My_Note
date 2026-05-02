@@ -409,3 +409,40 @@ if (isPostPage) {
   renderPostList();
   setupSearch();
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  let isScrollingToc = false;
+
+  // 页面加载时执行一次
+  scrollTocToActive();
+
+  // 监听页面滚动
+  window.addEventListener('scroll', function () {
+    if (isScrollingToc) return; // 避免目录滚动触发页面滚动死循环
+    scrollTocToActive();
+  });
+
+  function scrollTocToActive() {
+    const activeItem = document.querySelector('.toc-nav a.active');
+    const tocContainer = document.querySelector('.toc-section');
+
+    if (!activeItem || !tocContainer) return;
+
+    // 锁定，防止循环触发
+    isScrollingToc = true;
+
+    // 计算目录内部滚动（只滚目录，不滚页面）
+    const itemTop = activeItem.offsetTop;
+    const containerHeight = tocContainer.clientHeight;
+    const itemHeight = activeItem.offsetHeight;
+
+    // 让当前项居中显示在目录里
+    tocContainer.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
+
+    // 解锁
+    setTimeout(() => {
+      isScrollingToc = false;
+    }, 100);
+  }
+});

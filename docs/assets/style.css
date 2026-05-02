@@ -92,6 +92,17 @@ html[data-theme='eye'] {
 * {
   box-sizing: border-box;
 }
+/*
+:root {
+  font-size: 14px !important;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+*/
 
 /* ========== 全局背景设置 ========== */
 html {
@@ -143,7 +154,9 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ========== 页面头部和底部 ========== */
+/* ================= 
+ *   页面头部和底部 
+ * ================= */
 .site-header,
 .site-footer {
   max-width: unset;
@@ -152,16 +165,23 @@ a:hover {
 }
 
 .site-header {
-  padding-top: 32px;
+  padding-top: 20px;
   position: sticky;
   top: 0;
   z-index: 30;
-  backdrop-filter: blur(10px);
-  background: rgba(var(--bg-overlay-rgb), 0.0);    /*transparent;*/
-  border-bottom: 0px solid var(--chip-border);
+  background: transparent !important; /* 完全透明 */
+  border-bottom: none !important;      /* 彻底去掉底部边线 */
   transition: transform 0.22s ease;
-  /* ========== 高级感渐变下边缘 ========== */
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  /* box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);*/
+}
+
+/* 头部内部容器：完全透明、无样式 */
+.site-header-top {
+  background: transparent !important;
+  backdrop-filter: none !important;    /* 关闭虚化 */
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none !important;          /* 去掉内部阴影 */
 }
 
 .site-header.is-hidden {
@@ -176,14 +196,44 @@ a:hover {
   gap: 20px;
 }
 
+/* 只给左侧头像+博客名称容器 单独虚化 */
+/*.site-brand {
+  background: rgba(var(--bg-overlay-rgb), 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 15px 20px;
+  display: inline-block;
+}*/
+
 .site-brand {
-  min-width: 280px;
-  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 40px;
+  border-radius: 16px;
+
+  /* 毛玻璃基础 */
+  background: rgba(var(--bg-overlay-rgb), 0.25);
+  backdrop-filter: blur(10px);
+
+  /* 矩形四边渐变遮罩：中间实，四边线性淡出 */
+  -webkit-mask-image: 
+    linear-gradient(to top, transparent, black 15%),
+    linear-gradient(to bottom, transparent, black 15%),
+    linear-gradient(to left, transparent, black 15%),
+    linear-gradient(to right, transparent, black 15%);
+  mask-image: 
+    linear-gradient(to top, transparent, black 15%),
+    linear-gradient(to bottom, transparent, black 15%),
+    linear-gradient(to left, transparent, black 15%),
+    linear-gradient(to right, transparent, black 15%);
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(1.6rem, 4vw, 2.0rem);
 }
 
 .brand-title {
@@ -222,6 +272,9 @@ a:hover {
   align-items: center;
 }
 
+/* ======================
+ * site-actions: 头部右侧的操作按钮和导航链接容器 
+ * ======================*/
 .site-actions {
   display: flex;
   flex-wrap: wrap;
@@ -233,6 +286,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: -5px;
 }
 
 .site-nav a {
@@ -257,6 +311,7 @@ a:hover {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
+  margin-top: -5px;
 }
 
 .theme-btn {
@@ -331,17 +386,17 @@ a:hover {
 }
 
 .content {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px 40px;
 }
 
 .profile-page {
-  max-width: 1100px;
+  max-width: 1000px;
 }
 
 .profile-page .markdown-body {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .profile-page .markdown-body p,
@@ -350,11 +405,11 @@ a:hover {
 }
 
 .profile-page .markdown-body h1 {
-  font-size: 2.1rem;
+  font-size: 2.0rem;
 }
 
 .profile-page .markdown-body h2 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .profile-page .profile-avatar {
@@ -485,7 +540,7 @@ a:hover {
 
 .series-card h3 {
   margin: 0 0 8px;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
 }
 
 .series-card p {
@@ -553,7 +608,7 @@ a:hover {
 }
 
 .markdown-body h2 {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   margin-top: 1.5em;
 }
 
@@ -592,16 +647,43 @@ a:hover {
 
 /* ========== 目录（TOC）样式 ========== */
 .toc-section {
-  margin-bottom: 20px;
+  margin-bottom: 0; /* 取消底部间距，让目录更长 */
 }
 
+/* 侧边栏整体：设置高度，让目录和个人中心自动分配空间 */
+.post-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* 目录拉长 → 这里改大！90vh 几乎撑满屏幕 */
+  height: 92vh;
+}
+
+/* 目录区域：占满剩余高度，内容超出自动滚动 */
+.toc-section {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--toc-box-bg);
+  border: 1px solid var(--toc-box-border);
+  border-radius: 14px;
+  padding: 12px 16px;
+}
+
+/* 个人中心卡片：固定在底部 */
 .post-profile-card {
+  flex-shrink: 0;
+  /* 取消多余的 margin-top，目录自然变长 */
+  margin-top: 0 !important;
   border: 1px solid var(--toc-box-border);
   border-radius: 14px;
   background: var(--toc-box-bg);
   overflow: hidden;
 }
 
+/* ========================
+ *  文章目录界面
+ *    个人中心入口卡片样式
+ * ======================== */
 .post-profile-link {
   display: flex;
   flex-direction: column;
@@ -610,12 +692,10 @@ a:hover {
   color: var(--text);
   text-decoration: none;
 }
-
 .post-profile-link:hover {
   text-decoration: none;
   background: var(--toc-hover-bg);
 }
-
 .post-profile-icon {
   width: 40px;
   height: 40px;
@@ -626,18 +706,14 @@ a:hover {
   background: var(--panel-bg);
   font-size: 1.2rem;
 }
-
 .post-profile-title {
   font-size: 1rem;
   font-weight: 700;
 }
-
 .post-profile-desc {
   color: var(--muted);
   font-size: 1.1rem;
-  /* 描述文字行间距（舒适阅读） */
   line-height: 1.7 !important;
-  /* 文字之间的宽松度 */
   letter-spacing: 0.02em;
 }
 
@@ -645,7 +721,8 @@ a:hover {
   background: var(--toc-box-bg);
   border: 1px solid var(--toc-box-border);
   border-radius: 14px;
-  padding: 12px 16px;
+  padding: 0;
+  border: none;
 }
 
 .toc-section summary {
@@ -668,6 +745,15 @@ a:hover {
 
 .toc-section details[open] summary::before {
   transform: rotate(180deg);
+}
+
+/* 美化滚动条（可选） */
+.toc-section::-webkit-scrollbar {
+  width: 6px;
+}
+.toc-section::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
 }
 
 .toc-nav {
@@ -717,7 +803,9 @@ a:hover {
 }
 
 
-/* 微信二维码样式 */
+/* =======================================
+ * 个人中心：微信二维码样式
+ * ======================================= */
 .wechat-qr {
   text-align: center;
   margin-top: 30px;
@@ -735,12 +823,10 @@ a:hover {
   font-size: 0.95rem;
 }
 
-
 /* =======================================
  * APlayer 音乐播放器 自定义样式
  * 功能：毛玻璃美化 + 可拖拽 + 可缩放
  * ======================================= */
-
 /* 播放器主体样式 */
 .aplayer {
   background: rgba(var(--bg-overlay-rgb), 0.85) !important;
@@ -748,7 +834,6 @@ a:hover {
   border-radius: 12px !important;
   border: 1px solid var(--chip-border) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-
   /* 允许拖拽、允许缩放 */
   cursor: move;
   resize: both;
@@ -758,7 +843,6 @@ a:hover {
   max-width: 450px;   /* 最大宽度 */
   max-height: 120px;  /* 最大高度 */
 }
-
 /* 悬浮定位初始位置 */
 .aplayer-fixed {
   position: fixed !important;
@@ -766,18 +850,15 @@ a:hover {
   right: 16px;
   bottom: 16px;
 }
-
 /* 歌曲信息区域透明 */
 .aplayer .aplayer-info {
   background: transparent !important;
 }
-
 /* 歌名、歌手文字适配主题色 */
 .aplayer .aplayer-title,
 .aplayer .aplayer-author {
   color: var(--text) !important;
 }
-
 /* 右下角缩放小三角更明显 */
 .aplayer::-webkit-resizer {
   background-color: rgba(0,0,0,0.1);
