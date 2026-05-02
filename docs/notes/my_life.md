@@ -1,3 +1,5 @@
+<div class="post-card" style="--card-bg: url('/notes/images/my_life/image.png');">
+
 # 在无常中抛下一个锚点
 
 房东的猫
@@ -20,3 +22,4 @@
 
 ![image.png](images/my_life/image.png)
 
+</div>

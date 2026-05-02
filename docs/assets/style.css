@@ -561,15 +561,31 @@ a:hover {
 }
 
 /* ========== 文章卡片样式 ========== */
-.post-card {
-  /* 半透明白色背景，改这里调整透明度 */
+/* .post-card {
   background: var(--panel-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  /* 毛玻璃效果 */
   backdrop-filter: blur(8px);
+} */
+
+.post-card {
+  /* 核心：MD配置优先 → 无配置自动用默认半透明白色 */
+  background: var(--card-bg, var(--panel-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  backdrop-filter: blur(8px); /* 保留毛玻璃 */
+  
+  /* 背景图片自适应（铺满+居中+不重复） */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* 可选：柔和遮罩，让图片背景不刺眼、文字更清晰（推荐保留） */
+  box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.15);
 }
+
 
 .series-card {
   background: var(--panel-bg);
@@ -863,45 +879,64 @@ a:hover {
 
 /* =======================================
  * APlayer 音乐播放器 自定义样式
- * 功能：毛玻璃美化 + 可拖拽 + 可缩放
  * ======================================= */
 /* 播放器主体样式 */
 .aplayer {
-  background: rgba(var(--bg-overlay-rgb), 0.85) !important;
-  backdrop-filter: blur(10px) !important;
-  border-radius: 12px !important;
-  border: 1px solid var(--chip-border) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
-  /* 允许拖拽、允许缩放 */
-  cursor: move;
-  resize: both;
-  overflow: auto;
-  min-width: 280px;   /* 最小宽度，不能缩太小 */
-  min-height: 60px;    /* 最小高度 */
-  max-width: 450px;   /* 最大宽度 */
-  max-height: 120px;  /* 最大高度 */
+  background: rgba(137, 135, 135, 0.05) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 16px 16px 0 0 !important;
+  border: none !important;
 }
-/* 悬浮定位初始位置 */
 .aplayer-fixed {
-  position: fixed !important;
-  z-index: 999 !important;
-  right: 16px;
-  bottom: 16px;
+  box-shadow: 0 -5px 15px rgba(0,0,0,.05) !important;
 }
-/* 歌曲信息区域透明 */
-.aplayer .aplayer-info {
-  background: transparent !important;
-}
-/* 歌名、歌手文字适配主题色 */
-.aplayer .aplayer-title,
-.aplayer .aplayer-author {
-  color: var(--text) !important;
-}
-/* 右下角缩放小三角更明显 */
-.aplayer::-webkit-resizer {
-  background-color: rgba(0,0,0,0.1);
-  border-radius: 0 0 12px 0;
+.aplayer-list {
+  background: #d9d7d7 !important;
+  backdrop-filter: blur(10px) !important;
 }
 
+/* 顶部：歌曲名称 字体设置 */
+.aplayer-title {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 14px !important;
+  color: #100f0f !important;
+  font-weight: 500 !important;
+}
 
+/* 顶部：歌手名称 字体设置 */
+.aplayer-author {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 12px !important;
+  color: #201f1f !important;
+  font-weight: 400 !important;
+}
+
+/* 展开歌单：所有歌曲文字全局 */
+.aplayer-list li {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 13px !important;
+  color: #171717 !important;
+}
+
+/* 歌单里正在播放的那首高亮文字 */
+.aplayer-list li.aplayer-list-light {
+  color: #090808 !important;
+  font-weight: 500 !important;
+}
+
+/* 让展开歌单宽度 = 播放器宽度 */
+.aplayer .aplayer-list {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 如果是 fixed 模式（底部固定播放器） */
+.aplayer.aplayer-fixed .aplayer-list {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  max-width: 100% !important;
+}
 
