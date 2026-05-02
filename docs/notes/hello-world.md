@@ -2,6 +2,9 @@
 
 这是你的第一个文章。你可以直接把 Markdown 文件放到 `docs/notes` 目录下，并在 `docs/notes/posts.json` 中添加索引。
 
+本站通过 AI 生成源代码，实现基础功能。
+
+
 ## 使用方法
 
 - 写你的笔记到 `docs/notes/你的文件名.md`

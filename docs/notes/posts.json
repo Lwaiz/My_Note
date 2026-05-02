@@ -5,7 +5,7 @@
       "title": "欢迎来到我的 Markdown 博客",
       "description": "这是一个示例文章。把你的 Markdown 笔记放到 docs/notes 文件夹，并在此 JSON 中添加索引。",
       "date": "2026-05-01",
-      "series": "入门系列"
+      "series": "入门 系列"
     },
     {
       "slug": "OB知识",

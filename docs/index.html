@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Leo Blog</title>
   <link rel="stylesheet" href="assets/style.css">
   <!-- 网站图标设置 -->
@@ -41,6 +41,9 @@
   <main class="content">
     <section class="intro">
       <h2>文章列表</h2>
+      <div id="series-filter" class="series-filter">
+        <button class="filter-btn filter-btn-active" data-series="all">全部</button>
+      </div>
       <div id="post-list" class="post-list">正在加载文章...</div>
     </section>
 
@@ -89,8 +92,6 @@
 
 
   <!-- Aplayer 音乐播放器 -->
-  <!-- Aplayer 音乐播放器 -->
-
   <!-- Aplayer 音乐播放器 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
   <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>

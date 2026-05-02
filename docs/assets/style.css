@@ -62,13 +62,18 @@ html[data-theme='dark'] {
 
 html[data-theme='eye'] {
   color-scheme: light;
-  --bg: #eef5e7;
-  --surface: #f7fbf2;
+  /*--bg: #edd3b3;
+  --surface: #f7fbf2;*/
+  --bg: #e8ebdc;
+  --surface: #f3f5e8;
   --text: #273126;
   --muted: #556255;
-  --border: #c9d8bf;
+  /*--border: #c9d8bf;
   --primary: #2f7d32;
-  --bg-overlay-rgb: 238, 245, 231;
+  --bg-overlay-rgb: 238, 245, 231;*/
+  --border: #b8c2a8;
+  --primary: #2a6b2d;
+  --bg-overlay-rgb: 232, 235, 220;
   --chip-bg: rgba(247, 251, 242, 0.92);
   --chip-hover-bg: rgba(247, 251, 242, 1);
   --chip-border: rgba(47, 125, 50, 0.2);
@@ -400,9 +405,48 @@ a:hover {
   }
 }
 
+.series-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--chip-border);
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filter-btn-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.filter-btn-active:hover {
+  box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.4);
+}
+
+/* 文章列表网格间距 */
 .post-list {
   display: grid;
-  gap: 16px;
+  gap: 20px;
 }
 
 .section-grid {
@@ -500,7 +544,7 @@ a:hover {
   padding: 28px;
   font-size: 1.25rem;
   /* 毛玻璃效果 */
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
 .markdown-body h1 {

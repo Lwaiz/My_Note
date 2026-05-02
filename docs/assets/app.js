@@ -18,7 +18,7 @@ const THEME_META = {
 
 let allPosts = [];
 let currentTheme = 'light';
-let currentSeriesFilter = '';
+let currentSeriesFilter = 'all';
 
 function applyTheme(theme) {
   currentTheme = ALLOWED_THEMES.has(theme) ? theme : 'light';
@@ -102,7 +102,7 @@ function normalizeImageSrc(src, baseDir) {
 
 function filterPosts(query) {
   query = query.trim().toLowerCase();
-  const basePosts = currentSeriesFilter
+  const basePosts = currentSeriesFilter !== 'all'
     ? allPosts.filter(post => post.series === currentSeriesFilter)
     : allPosts;
 
@@ -174,6 +174,50 @@ function populateSeries(posts) {
   }).join('');
 }
 
+function setupSeriesFilter(posts) {
+  const filterContainer = document.getElementById('series-filter');
+  if (!filterContainer) return;
+
+  const seriesSet = new Set();
+  posts.forEach(post => {
+    if (post.series) {
+      seriesSet.add(post.series);
+    }
+  });
+
+  const buttons = [];
+  // 关键修复：根据 currentSeriesFilter 动态设置激活状态
+  buttons.push(`<button class="filter-btn ${currentSeriesFilter === 'all' ? 'filter-btn-active' : ''}" data-series="all">全部</button>`);
+  //const buttons = ['<button class="filter-btn filter-btn-active" data-series="all">全部</button>'];
+  Array.from(seriesSet).sort().forEach(series => {
+    buttons.push(`<button class="filter-btn" data-series="${series}">${series}</button>`);
+  });
+
+  filterContainer.innerHTML = buttons.join('');
+
+  filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const series = btn.getAttribute('data-series');
+      currentSeriesFilter = series;
+
+      // 更新按钮状态
+      filterContainer.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('filter-btn-active');
+      });
+      btn.classList.add('filter-btn-active');
+
+      // 更新显示标题
+      const introTitle = document.querySelector('.intro h2');
+      if (introTitle) {
+        introTitle.textContent = series === 'all' ? '文章列表' : `文章列表（${series}）`;
+      }
+
+      // 过滤并显示文章
+      filterPosts(searchInput?.value || '');
+    });
+  });
+}
+
 function setupSearch() {
   if (!searchInput) return;
   searchInput.addEventListener('input', () => {
@@ -194,16 +238,38 @@ async function renderPostList() {
   try {
     const data = await loadJSON('notes/posts.json');
     allPosts = data.posts || [];
-    currentSeriesFilter = getQueryParam('series') || '';
-    const initialPosts = currentSeriesFilter
+    // const urlSeries = getQueryParam('series');
+    currentSeriesFilter = 'all';
+    
+    // currentSeriesFilter = getQueryParam('series') || 'all';
+
+    // 生成系列过滤按钮
+    setupSeriesFilter(allPosts);
+
+    // 根据当前过滤条件显示文章
+    const initialPosts = currentSeriesFilter !== 'all'
       ? allPosts.filter(post => post.series === currentSeriesFilter)
       : allPosts;
     displayPostCards(initialPosts);
 
+    // const introTitle = document.querySelector('.intro h2');
+    // if (introTitle && currentSeriesFilter !== 'all') {
+    //   introTitle.textContent = `文章列表（${currentSeriesFilter}）`;
+    // }
+    // 关键修复：初始化时同步标题
+    // const introTitle = document.querySelector('.intro h2');
+    // if (introTitle) {
+    //   introTitle.textContent = currentSeriesFilter === 'all' 
+    //     ? '文章列表' 
+    //     : `文章列表（${currentSeriesFilter}）`;
+    // }
+
+    // 标题恢复为默认
     const introTitle = document.querySelector('.intro h2');
-    if (introTitle && currentSeriesFilter) {
-      introTitle.textContent = `文章列表（系列：${currentSeriesFilter}）`;
+    if (introTitle) {
+      introTitle.textContent = '文章列表';
     }
+
 
     populateArchive(allPosts);
     populateCategories(allPosts);
