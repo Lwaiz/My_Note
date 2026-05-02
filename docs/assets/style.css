@@ -1,3 +1,8 @@
+/* =======================
+ * 主题色彩变量定义
+ * 定义了三套主题：默认（浅色）、黑暗、眼睛（暖色）
+ * 通过切换 html 的 data-theme 属性来应用不同主题
+ * ======================= */
 :root {
   color-scheme: light;
   --bg: #f7f7f8;
@@ -36,6 +41,7 @@
   --bg-opacity: 0.85;
 }
 
+/* 黑暗主题：基于深色调，整体偏冷，适合喜欢简洁现代风格的用户 */
 html[data-theme='dark'] {
   color-scheme: dark;
   --bg: #111827;
@@ -60,6 +66,7 @@ html[data-theme='dark'] {
   --bg-opacity: 0.65;
 }
 
+/* 眼睛主题：基于浅色调，整体偏暖，适合喜欢柔和自然风格的用户 */
 html[data-theme='eye'] {
   color-scheme: light;
   /*--bg: #edd3b3;
@@ -115,6 +122,7 @@ html {
   background-color: var(--bg);
 }
 
+/* ========== 全局基础样式 ========== */
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -143,20 +151,20 @@ body > * {
   z-index: 1;
 }
 
+/* 链接样式 */
 a {
   color: var(--primary);
   text-decoration: none;
   position: relative;
   z-index: 1;
 }
-
 a:hover {
   text-decoration: underline;
 }
 
-/* ================= 
- *   页面头部和底部 
- * ================= */
+/* ===================== 
+ *   页面头部和底部设置 
+ * ===================== */
 .site-header,
 .site-footer {
   max-width: unset;
@@ -205,11 +213,12 @@ a:hover {
   display: inline-block;
 }*/
 
+/* 头像+博客名称容器：毛玻璃效果 + 四边渐变遮罩 */
 .site-brand {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 15px 40px;
+  padding: 20px 50px;
   border-radius: 16px;
 
   /* 毛玻璃基础 */
@@ -236,6 +245,9 @@ a:hover {
   font-size: clamp(1.6rem, 4vw, 2.0rem);
 }
 
+/* ======================
+ *   头像 + 博客名称容器 
+ * ====================== */
 .brand-title {
   display: inline-flex;
   align-items: center;
@@ -273,7 +285,8 @@ a:hover {
 }
 
 /* ======================
- * site-actions: 头部右侧的操作按钮和导航链接容器 
+ * site-actions: 
+ *   头部右侧的操作按钮和导航链接容器 
  * ======================*/
 .site-actions {
   display: flex;
@@ -391,27 +404,52 @@ a:hover {
   padding: 0 20px 40px;
 }
 
+/* =======================
+ * 归档 / 分类 / 友情链接 页面样式调整
+ * ======================= */
+
+.site-section h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+#archive-list,
+#categories-list {
+  font-size: 16px;
+  line-height: 2;
+}
+
+.friend-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+  font-size: 16px;
+}
+
+.friend-links a {
+  text-decoration: none;
+}
+
+/* =======================
+ *   profile-page
+ *   个人中心页面样式调整
+ * ======================= */
 .profile-page {
   max-width: 1000px;
 }
-
 .profile-page .markdown-body {
   font-size: 1.2rem;
 }
-
 .profile-page .markdown-body p,
 .profile-page .markdown-body li {
   line-height: 2;
 }
-
 .profile-page .markdown-body h1 {
   font-size: 2.0rem;
 }
-
 .profile-page .markdown-body h2 {
   font-size: 1.5rem;
 }
-
 .profile-page .profile-avatar {
   width: 140px;
   height: 140px;
@@ -422,7 +460,9 @@ a:hover {
   margin: 0 auto 18px;
 }
 
-/* ========== 文章布局：左目录 + 右内容 ========== */
+/* =====================
+ * 文章布局：左目录 + 右内容 
+ * ===================== */
 .post-content {
   display: flex;
   gap: 30px;
@@ -469,6 +509,7 @@ a:hover {
   border-bottom: 1px solid var(--chip-border);
 }
 
+/* 过滤按钮样式 */
 .filter-btn {
   padding: 8px 16px;
   border: 1px solid var(--chip-border);
@@ -591,6 +632,9 @@ a:hover {
   box-shadow: 0 10px 20px var(--primary-shadow-hover);
 }
 
+/* =======================
+ *        文章内容样式 
+ * ======================= */
 .markdown-body {
   /* 半透明白色背景，改这里调整透明度 */
   background: var(--panel-bg);
@@ -602,21 +646,19 @@ a:hover {
   backdrop-filter: blur(6px);
 }
 
+/* 标题样式：改这里调整标题大小和间距 */
 .markdown-body h1 {
   font-size: 2rem;
   margin-top: 1.5em;
 }
-
 .markdown-body h2 {
   font-size: 1.5rem;
   margin-top: 1.5em;
 }
-
 .markdown-body h3 {
   font-size: 1.3rem;
   margin-top: 1.5em;
 }
-
 .markdown-body h4 {
   font-size: 1.1rem;
   margin-top: 1.5em;
@@ -645,11 +687,14 @@ a:hover {
   margin: 18px auto;
 }
 
-/* ========== 目录（TOC）样式 ========== */
+
+/* ======================
+ *  文章目录界面布局调整
+ *  使目录更长，个人中心卡片固定在底部
+ * ====================== */
 .toc-section {
   margin-bottom: 0; /* 取消底部间距，让目录更长 */
 }
-
 /* 侧边栏整体：设置高度，让目录和个人中心自动分配空间 */
 .post-sidebar {
   display: flex;
@@ -658,7 +703,6 @@ a:hover {
   /* 目录拉长 → 这里改大！90vh 几乎撑满屏幕 */
   height: 92vh;
 }
-
 /* 目录区域：占满剩余高度，内容超出自动滚动 */
 .toc-section {
   flex: 1;
@@ -669,7 +713,11 @@ a:hover {
   padding: 12px 16px;
 }
 
-/* 个人中心卡片：固定在底部 */
+/* ========================
+ *  文章目录界面
+ *    个人中心入口卡片样式
+ *   固定在底部，目录自然变长
+ * ======================== */
 .post-profile-card {
   flex-shrink: 0;
   /* 取消多余的 margin-top，目录自然变长 */
@@ -679,11 +727,6 @@ a:hover {
   background: var(--toc-box-bg);
   overflow: hidden;
 }
-
-/* ========================
- *  文章目录界面
- *    个人中心入口卡片样式
- * ======================== */
 .post-profile-link {
   display: flex;
   flex-direction: column;
@@ -717,6 +760,9 @@ a:hover {
   letter-spacing: 0.02em;
 }
 
+/* =========================
+ *  toc-section:文章界面目录样式 
+ * =========================*/
 .toc-section details {
   background: var(--toc-box-bg);
   border: 1px solid var(--toc-box-border);
@@ -724,29 +770,24 @@ a:hover {
   padding: 0;
   border: none;
 }
-
 .toc-section summary {
   font-weight: 700;
   cursor: pointer;
   margin-bottom: 10px;
   list-style: none;
 }
-
 .toc-section summary::-webkit-details-marker {
   display: none;
 }
-
 .toc-section summary::before {
   content: '▾';
   display: inline-block;
   margin-right: 8px;
   transition: transform 0.2s ease;
 }
-
 .toc-section details[open] summary::before {
   transform: rotate(180deg);
 }
-
 /* 美化滚动条（可选） */
 .toc-section::-webkit-scrollbar {
   width: 6px;
@@ -756,23 +797,23 @@ a:hover {
   border-radius: 3px;
 }
 
+/* =========================
+ *  toc-nav: 目录导航样式 
+ * =========================*/
 .toc-nav {
   padding-left: 0;
   margin: 0;
   /* 改这里调整目录字体大小（默认 0.95rem = 15.2px） */
   font-size: 1.1rem;
 }
-
 .toc-nav ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
 .toc-nav li {
   margin: 6px 0;
 }
-
 .toc-nav a {
   color: var(--primary);
   text-decoration: none;
@@ -781,12 +822,10 @@ a:hover {
   display: block;
   transition: all 0.2s ease;
 }
-
 .toc-nav a:hover {
   text-decoration: underline;
   background: var(--toc-hover-bg);
 }
-
 /* 当前阅读位置的目录项 */
 .toc-nav a.active {
   color: var(--primary);
@@ -801,7 +840,6 @@ a:hover {
   border-left: 4px solid var(--primary);
   background: var(--blockquote-bg);
 }
-
 
 /* =======================================
  * 个人中心：微信二维码样式

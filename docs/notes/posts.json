@@ -19,14 +19,16 @@
       "title": "Paxos论文解读",
       "description": "Paxos算法论文的详细解读。",
       "date": "2026-05-01",
-      "series": "OceanBase 系列"
+      "series": "OceanBase 系列",
+      "category": "OceanBase"
     },
     {
       "slug": "my_life",
       "title": "在无常中抛下一个锚点",
       "description": "记录我的日常生活和思考。",
       "date": "2026-05-01",
-      "series": "生活 系列"
+      "series": "生活 系列",
+      "category": "生活"
     }
   ]
 }
