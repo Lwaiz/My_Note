@@ -173,7 +173,7 @@
         const content = marked.parse(mdText);
 
         const imgDir = IMAGE_BASE + timeCode + "/";
-        const imgHtml = await buildImageGrid(imgDir, timeCode);
+        const imgHtml = await buildImageGrid(timeCode);
 
         const card = document.createElement("div");
         card.className = "moment-card";
@@ -191,22 +191,29 @@
     }
 
     // 生成图片网格
-    async function buildImageGrid(imgDir, timeCode) {
+    async function buildImageGrid(timeCode) {
       const exts = ["jpg", "jpeg", "png", "gif", "webp"];
       const imgList = [];
+
       for (let i = 1; i <= 9; i++) {
         for (const ext of exts) {
-          const url = `${imgDir}${timeCode}_${i}.${ext}`;
+          // 正确拼接路径：images/时间码/时间码_i.xxx
+          const url = `${IMAGE_BASE}${timeCode}/${timeCode}_${i}.${ext}`;
           try {
-            const r = await fetch(url, { method: "HEAD" });
-            if (r.ok) { imgList.push(url); break; }
+            const res = await fetch(url, { method: "HEAD" });
+            if (res.ok) {
+              imgList.push(url);
+              break;
+            }
           } catch {}
         }
       }
+
       if (imgList.length === 0) return "";
+
       return `
         <div class="moment-images img-${imgList.length}">
-          ${imgList.map(u => `<img src="${u}" onclick="openImgPreview('${u}')">`).join("")}
+          ${imgList.map(u => `<img src="${u}" onclick="openImgPreview('${u}')" alt="随笔配图">`).join("")}
         </div>
       `;
     }
