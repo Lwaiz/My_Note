@@ -36,21 +36,26 @@
     }
     .moment-text {
       line-height: 1.6;
-      margin-bottom: 10px;
+      margin-bottom: 2px;
       white-space: pre-wrap;
+    }
+    /* 🔥 强制修复 markdown 文本间距 */
+    .moment-text p {
+      margin: 0 !important;
+      padding: 0 !important;
     }
     .moment-time {
       font-size: 13px;
       color: var(--muted);
-      margin-top: 8px;
+      margin-top: 20px;
     }
     .moment-images {
       display: grid;
-      gap: 6px;
-      margin: 12px 0;
+      gap: 8px;
+      margin: 2px 0;
     }
-    .moment-images.img-1 { grid-template-columns: 1fr; }
-    .moment-images.img-2,.moment-images.img-4 { grid-template-columns: 1fr 1fr; }
+    .moment-images.img-1 { grid-template-columns: 1fr; max-width: 45%; margin: 0 auto;}
+    .moment-images.img-2,.moment-images.img-4 { grid-template-columns: 1fr 1fr; max-width: 90%; margin: 0 auto;}
     .moment-images.img-3,.moment-images.img-5,.moment-images.img-6,.moment-images.img-7,.moment-images.img-8,.moment-images.img-9 { grid-template-columns: 1fr 1fr 1fr; }
     .moment-images img {
       width: 100%;
@@ -63,7 +68,7 @@
     .moment-images img:hover { transform: scale(1.02); }
     .img-preview-mask {
       position: fixed; top:0; left:0; width:100vw; height:100vh;
-      background:rgba(0,0,0,.9); z-index:99999; display:none;
+      background:rgba(183, 182, 182, 0.9); z-index:99999; display:none;
       align-items:center; justify-content:center; padding:20px;
     }
     .img-preview-mask.show { display:flex; }
@@ -140,21 +145,22 @@
 
     window.addEventListener("DOMContentLoaded", loadNotesFromJson);
 
-    // 从 JSON 读取文件列表
+    // 🔥 适配你的 JSON 格式 { pyq_list: [ ... ] }
     async function loadNotesFromJson() {
       notesList.innerHTML = "<p>正在加载随笔...</p>";
       try {
         const res = await fetch(BASE_URL + "pyq_list.json");
-        const fileList = await res.json();
+        const jsonData = await res.json();
+        const pyqList = jsonData.pyq_list; // 读取列表
 
-        if (!fileList || fileList.length === 0) {
+        if (!pyqList || pyqList.length === 0) {
           notesList.innerHTML = "<p>暂无随笔</p>";
           return;
         }
 
         notesList.innerHTML = "";
-        for (const file of fileList) {
-          await renderSingleNote(file);
+        for (const item of pyqList) {
+          await renderSingleNote(item);
         }
       } catch (err) {
         notesList.innerHTML = "<p>加载失败</p>";
@@ -162,18 +168,27 @@
       }
     }
 
-    // 渲染单条随笔
-    async function renderSingleNote(fileName) {
+    // 渲染单条（从 JSON 直接取图片，0 遍历 0 404）
+    async function renderSingleNote(item) {
       try {
-        const timeCode = fileName.replace("_pyq.md", "");
+        const { file, timeCode, images } = item;
         const timeStr = `${timeCode.slice(0,4)}-${timeCode.slice(4,6)}-${timeCode.slice(6,8)} ${timeCode.slice(9,11)}:${timeCode.slice(11,13)}`;
 
-        const mdRes = await fetch(BASE_URL + fileName);
+        // 读取 markdown
+        const mdRes = await fetch(BASE_URL + file);
         const mdText = await mdRes.text();
         const content = marked.parse(mdText);
 
-        const imgDir = IMAGE_BASE + timeCode + "/";
-        const imgHtml = await buildImageGrid(timeCode);
+        // 直接用 JSON 里的图片名称
+        const imgUrls = images.map(img => `${IMAGE_BASE}${timeCode}/${img}`);
+
+        const imgHtml = imgUrls.length
+          ? `
+          <div class="moment-images img-${imgUrls.length}">
+            ${imgUrls.map(u => `<img src="${u}" onclick="openImgPreview('${u}')">`).join("")}
+          </div>
+          `
+          : "";
 
         const card = document.createElement("div");
         card.className = "moment-card";
@@ -188,34 +203,6 @@
         `;
         notesList.appendChild(card);
       } catch (e) {}
-    }
-
-    // 生成图片网格
-    async function buildImageGrid(timeCode) {
-      const exts = ["jpg", "jpeg", "png", "gif", "webp"];
-      const imgList = [];
-
-      for (let i = 1; i <= 9; i++) {
-        for (const ext of exts) {
-          // 正确拼接路径：images/时间码/时间码_i.xxx
-          const url = `${IMAGE_BASE}${timeCode}/${timeCode}_${i}.${ext}`;
-          try {
-            const res = await fetch(url, { method: "HEAD" });
-            if (res.ok) {
-              imgList.push(url);
-              break;
-            }
-          } catch {}
-        }
-      }
-
-      if (imgList.length === 0) return "";
-
-      return `
-        <div class="moment-images img-${imgList.length}">
-          ${imgList.map(u => `<img src="${u}" onclick="openImgPreview('${u}')" alt="随笔配图">`).join("")}
-        </div>
-      `;
     }
   </script>
 </body>
