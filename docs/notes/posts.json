@@ -29,6 +29,22 @@
       "date": "2026-05-01",
       "series": "生活 系列",
       "category": "生活"
+    },
+    {
+      "slug": "Raft论文",
+      "title": "Raft论文解读",
+      "description": "Raft算法论文的详细解读。",
+      "date": "2026-05-03",
+      "series": "OceanBase 系列",
+      "category": "OceanBase"
+    },
+    {
+      "slug": "Spanner论文",
+      "title": "Spanner论文解读",
+      "description": "Spanner论文的详细解读。",
+      "date": "2026-05-03",
+      "series": "OceanBase 系列",
+      "category": "OceanBase"
     }
   ]
 }
