@@ -1098,3 +1098,29 @@ a:hover {
 .bg-option:hover {
   border-color: #fff;
 }
+
+/* =======================
+ * 文章列表 展开/收起 按钮样式（追加）
+ * ======================= */
+/* 文章展开/收起按钮样式 */
+.post-controls {
+  text-align: center;
+  margin: 20px 0;
+}
+.toggle-btn {
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--primary-shadow);
+  display: none;
+}
+.toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--primary-shadow-hover);
+}

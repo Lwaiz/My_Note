@@ -12,7 +12,8 @@
       "title": "OceanBase 知识库",
       "description": "OceanBase基础知识，了解OceanBase框架。",
       "date": "2026-05-01",
-      "series": "OceanBase 系列"
+      "series": "OceanBase 系列",
+      "category": "OceanBase"
     },
     {
       "slug": "Paxos论文",
@@ -20,7 +21,7 @@
       "description": "Paxos算法论文的详细解读。",
       "date": "2026-05-01",
       "series": "OceanBase 系列",
-      "category": "OceanBase"
+      "category": "论文解读"
     },
     {
       "slug": "my_life",
@@ -36,7 +37,7 @@
       "description": "Raft算法论文的详细解读。",
       "date": "2026-05-03",
       "series": "OceanBase 系列",
-      "category": "OceanBase"
+      "category": "论文解读"
     },
     {
       "slug": "Spanner论文",
@@ -44,7 +45,15 @@
       "description": "Spanner论文的详细解读。",
       "date": "2026-05-03",
       "series": "OceanBase 系列",
-      "category": "OceanBase"
+      "category": "论文解读"
+    },
+    {
+      "slug": "GFS",
+      "title": "GFS技术",
+      "description": "Google File System（GFS）的技术细节和实现原理。",
+      "date": "2026-05-03",
+      "series": "OceanBase 系列",
+      "category": "技术笔记"
     }
   ]
 }

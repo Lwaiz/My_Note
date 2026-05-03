@@ -16,6 +16,11 @@ const THEME_META = {
   eye: { icon: '👁', label: '护眼模式' }
 };
 
+// 👇 新增：折叠展开配置
+const DEFAULT_SHOW_COUNT = 4;
+let isExpanded = false;
+let toggleBtn = null;
+
 let allPosts = [];
 let currentTheme = 'light';
 let currentSeriesFilter = 'all';
@@ -79,13 +84,28 @@ function buildPostCard(post) {
   return card;
 }
 
+// 👇 修复：文章折叠核心函数
 function displayPostCards(posts) {
   postListContainer.innerHTML = '';
   if (!posts.length) {
     postListContainer.innerHTML = '<p>未找到匹配的文章，请更改搜索关键词。</p>';
+    if (toggleBtn) toggleBtn.style.display = 'none';
     return;
   }
-  posts.forEach(post => postListContainer.appendChild(buildPostCard(post)));
+
+  // 控制显示数量
+  const showPosts = isExpanded ? posts : posts.slice(0, DEFAULT_SHOW_COUNT);
+  showPosts.forEach(post => postListContainer.appendChild(buildPostCard(post)));
+
+  // 控制按钮显示
+  if (toggleBtn) {
+    if (posts.length > DEFAULT_SHOW_COUNT) {
+      toggleBtn.style.display = 'inline-block';
+      toggleBtn.textContent = isExpanded ? '收起文章' : '查看更多文章';
+    } else {
+      toggleBtn.style.display = 'none';
+    }
+  }
 }
 
 function getQueryParam(name) {
@@ -186,9 +206,7 @@ function setupSeriesFilter(posts) {
   });
 
   const buttons = [];
-  // 关键修复：根据 currentSeriesFilter 动态设置激活状态
   buttons.push(`<button class="filter-btn ${currentSeriesFilter === 'all' ? 'filter-btn-active' : ''}" data-series="all">全部</button>`);
-  //const buttons = ['<button class="filter-btn filter-btn-active" data-series="all">全部</button>'];
   Array.from(seriesSet).sort().forEach(series => {
     buttons.push(`<button class="filter-btn" data-series="${series}">${series}</button>`);
   });
@@ -200,19 +218,16 @@ function setupSeriesFilter(posts) {
       const series = btn.getAttribute('data-series');
       currentSeriesFilter = series;
 
-      // 更新按钮状态
       filterContainer.querySelectorAll('.filter-btn').forEach(b => {
         b.classList.remove('filter-btn-active');
       });
       btn.classList.add('filter-btn-active');
 
-      // 更新显示标题
       const introTitle = document.querySelector('.intro h2');
       if (introTitle) {
         introTitle.textContent = series === 'all' ? '文章列表' : `文章列表（${series}）`;
       }
 
-      // 过滤并显示文章
       filterPosts(searchInput?.value || '');
     });
   });
@@ -238,42 +253,36 @@ async function renderPostList() {
   try {
     const data = await loadJSON('notes/posts.json');
     allPosts = data.posts || [];
-    // const urlSeries = getQueryParam('series');
     currentSeriesFilter = 'all';
     
-    // currentSeriesFilter = getQueryParam('series') || 'all';
-
-    // 生成系列过滤按钮
     setupSeriesFilter(allPosts);
 
-    // 根据当前过滤条件显示文章
+    // ==============================================
+    // 👇 修复点：先拿按钮，再渲染文章！！！
+    // ==============================================
+    toggleBtn = document.getElementById('toggle-posts-btn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        filterPosts(searchInput?.value || '');
+      });
+    }
+
+    // 然后再渲染文章
     const initialPosts = currentSeriesFilter !== 'all'
       ? allPosts.filter(post => post.series === currentSeriesFilter)
       : allPosts;
     displayPostCards(initialPosts);
 
-    // const introTitle = document.querySelector('.intro h2');
-    // if (introTitle && currentSeriesFilter !== 'all') {
-    //   introTitle.textContent = `文章列表（${currentSeriesFilter}）`;
-    // }
-    // 关键修复：初始化时同步标题
-    // const introTitle = document.querySelector('.intro h2');
-    // if (introTitle) {
-    //   introTitle.textContent = currentSeriesFilter === 'all' 
-    //     ? '文章列表' 
-    //     : `文章列表（${currentSeriesFilter}）`;
-    // }
-
-    // 标题恢复为默认
     const introTitle = document.querySelector('.intro h2');
     if (introTitle) {
       introTitle.textContent = '文章列表';
     }
 
-
     populateArchive(allPosts);
     populateCategories(allPosts);
     populateSeries(allPosts);
+
   } catch (err) {
     postListContainer.innerHTML = `<p>无法加载文章列表，请检查 <code>docs/notes/posts.json</code> 是否存在。</p>`;
     console.error(err);
@@ -323,7 +332,6 @@ function buildTOC() {
   toc.innerHTML = '';
   toc.appendChild(list);
   
-  // 滚动监听
   observeHeadings(headings);
 }
 
@@ -374,7 +382,7 @@ async function renderMarkdownPost() {
     `;
     document.title = `${post.title} · 我的 Markdown 博客`;
   } catch (err) {
-    markdownContainer.innerHTML = `<p>加载文章失败：${err.message}</p><p><a href="index.html">返回首页</a></p>`;
+    markdownContainer.innerHTML = `<p>加载文章失败：${err.message}</p><p><a href="index.html">首页</a></p>`;
     console.error(err);
   }
 }
@@ -410,41 +418,24 @@ if (isPostPage) {
   setupSearch();
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
   let isScrollingToc = false;
-
-  // 页面加载时执行一次
   scrollTocToActive();
-
-  // 监听页面滚动
   window.addEventListener('scroll', function () {
-    if (isScrollingToc) return; // 避免目录滚动触发页面滚动死循环
+    if (isScrollingToc) return;
     scrollTocToActive();
   });
-
   function scrollTocToActive() {
     const activeItem = document.querySelector('.toc-nav a.active');
     const tocContainer = document.querySelector('.toc-section');
-
     if (!activeItem || !tocContainer) return;
-
-    // 锁定，防止循环触发
     isScrollingToc = true;
-
-    // 计算目录内部滚动（只滚目录，不滚页面）
     const itemTop = activeItem.offsetTop;
     const containerHeight = tocContainer.clientHeight;
     const itemHeight = activeItem.offsetHeight;
-
-    // 让当前项居中显示在目录里
     tocContainer.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
-
-    // 解锁
     setTimeout(() => {
       isScrollingToc = false;
     }, 100);
   }
 });
-
-
