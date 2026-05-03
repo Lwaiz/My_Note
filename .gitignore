@@ -32,3 +32,4 @@ Thumbs.db
 
 # 6. 忽略local-write.html 文件
 local-write.html
+app.py
