@@ -882,61 +882,150 @@ a:hover {
  * ======================================= */
 /* 播放器主体样式 */
 .aplayer {
-  background: rgba(137, 135, 135, 0.05) !important;
-  backdrop-filter: blur(12px) !important;
-  border-radius: 16px 16px 0 0 !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-radius: 10px !important; /* 全局圆角 */
   border: none !important;
+  box-sizing: border-box !important;
 }
+
 .aplayer-fixed {
   box-shadow: 0 -5px 15px rgba(0,0,0,.05) !important;
-}
-.aplayer-list {
-  background: #d9d7d7 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* 顶部：歌曲名称 字体设置 */
-.aplayer-title {
-  font-family: "微软雅黑", "苹方", sans-serif !important;
-  font-size: 14px !important;
-  color: #100f0f !important;
-  font-weight: 500 !important;
+  transition: left 0.15s ease, bottom 0.15s ease;
+  width: auto !important;
+  display: block !important;
+  min-width: 400px !important;
+  border-radius: 10px !important; /* 统一圆角 */
+  background: transparent !important;
 }
 
-/* 顶部：歌手名称 字体设置 */
-.aplayer-author {
-  font-family: "微软雅黑", "苹方", sans-serif !important;
-  font-size: 12px !important;
-  color: #201f1f !important;
-  font-weight: 400 !important;
+/* 播放器主体 */
+.aplayer .aplayer-body {
+  width: auto !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
 }
 
-/* 展开歌单：所有歌曲文字全局 */
-.aplayer-list li {
+/* 歌单父容器 */
+.aplayer .aplayer-list-wrap {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+/* 歌单：毛玻璃 + 统一圆角 */
+.aplayer .aplayer-list {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  max-height: 280px !important;
+  left: 0 !important;
+  right: 0 !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important; /* 统一圆角 */
+}
+
+
+
+/* 歌单每一行：强制Flex布局，确保生效 */
+.aplayer-list .aplayer-list-item {
+  display: flex !important; /* 强制开启Flex布局 */
+  align-items: center !important; /* 所有元素垂直居中 */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 12px !important; /* 左右内边距，避免贴边 */
+  gap: 8px !important; /* 序号和歌曲名之间的间距 */
   font-family: "微软雅黑", "苹方", sans-serif !important;
   font-size: 13px !important;
   color: #171717 !important;
 }
 
-/* 歌单里正在播放的那首高亮文字 */
-.aplayer-list li.aplayer-list-light {
-  color: #090808 !important;
-  font-weight: 500 !important;
+/* 序号：固定宽度，靠左对齐 */
+.aplayer-list-index {
+  flex-shrink: 0 !important; /* 序号不被压缩 */
+  width: 24px !important; /* 固定宽度，让序号对齐 */
+  text-align: left !important;
 }
 
-/* 让展开歌单宽度 = 播放器宽度 */
-.aplayer .aplayer-list {
+/* 歌曲名：占满中间空间，靠左显示 */
+.aplayer-list-name {
+  flex: 1 !important; /* 关键：占满序号和歌手名之间的所有空间 */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* 超长自动省略 */
+  text-align: left !important;
+}
+
+/* 歌手名：强制靠右，文字也右对齐 */
+.aplayer-list-author {
+  flex-shrink: 0 !important; /* 歌手名不被压缩 */
+  max-width: 35% !important; /* 限制最大宽度，避免太长 */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* 超长自动省略 */
+  text-align: right !important; /* 歌手名文字本身靠右 */
+}
+
+/* 正在播放的高亮样式 */
+ /* 正在播放歌曲：文字加深 + 半透明毛玻璃底色，不挡背景 */
+.aplayer-list .aplayer-list-light {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  /* 半透明底色 + 毛玻璃，不是实色块 */
+  background: rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-radius: 6px !important;
+  margin: 2px 8px !important;
+}
+/* 鼠标悬浮经过歌单行：同样毛玻璃效果 */
+.aplayer-list .aplayer-list-item:hover {
+  background: rgba(212, 206, 206, 0.06) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  border-radius: 6px !important;
+  margin: 2px 8px !important;
+  transition: background 0.2s ease !important;
+}
+
+
+/* ========== 播放器顶部文字：也加省略号，避免挤坏控制栏 ========== */
+.aplayer-title {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 14px !important;
+  color: #100f0f !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.aplayer-author {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 12px !important;
+  color: #201f1f !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* fixed模式下的强化适配 */
+.aplayer.aplayer-fixed .aplayer-list-wrap,
+.aplayer.aplayer-fixed .aplayer-list {
   width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
   left: 0 !important;
   right: 0 !important;
   box-sizing: border-box !important;
-}
-
-/* 如果是 fixed 模式（底部固定播放器） */
-.aplayer.aplayer-fixed .aplayer-list {
-  width: 100% !important;
-  left: 0 !important;
-  right: 0 !important;
-  max-width: 100% !important;
 }
 
