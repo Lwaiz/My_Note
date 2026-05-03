@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随笔 · Leo's Blog</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    .moment-card {
+      padding: 16px;
+      margin-bottom: 16px;
+      background: var(--panel-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .moment-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .moment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .moment-name {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 16px;
+    }
+    .moment-text {
+      line-height: 1.6;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+    .moment-time {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .moment-images {
+      display: grid;
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .moment-images.img-1 { grid-template-columns: 1fr; }
+    .moment-images.img-2,.moment-images.img-4 { grid-template-columns: 1fr 1fr; }
+    .moment-images.img-3,.moment-images.img-5,.moment-images.img-6,.moment-images.img-7,.moment-images.img-8,.moment-images.img-9 { grid-template-columns: 1fr 1fr 1fr; }
+    .moment-images img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .moment-images img:hover { transform: scale(1.02); }
+    .img-preview-mask {
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background:rgba(0,0,0,.9); z-index:99999; display:none;
+      align-items:center; justify-content:center; padding:20px;
+    }
+    .img-preview-mask.show { display:flex; }
+    .img-preview-mask img { max-width:90%; max-height:90%; border-radius:8px; object-fit:contain; }
+  </style>
+</head>
+<body>
+  <div id="page-background"></div>
+  <div class="img-preview-mask" id="imgPreviewMask">
+    <img id="previewImg" alt="预览">
+  </div>
+
+  <header class="site-header">
+    <div class="site-header-top post-header-top">
+      <div class="site-brand">
+        <h1 class="brand-title">
+          <a href="index.html" class="brand-link">
+            <img src="avatar.png" class="brand-avatar">
+            <span>Leo's Blog</span>
+          </a>
+        </h1>
+      </div>
+      <div class="site-actions">
+        <nav class="site-nav">
+          <a href="index.html">文章</a>
+          <a href="pyq.html" style="background:var(--primary);color:#fff;">随笔</a>
+          <a href="index.html#series">系列</a>
+          <a href="index.html#archive">归档</a>
+          <a href="index.html#categories">分类</a>
+          <a href="index.html#friends">友链</a>
+          <a href="profile.html">个人中心</a>
+        </nav>
+        <button id="theme-toggle" class="theme-btn">☀</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content" style="max-width:720px;margin:0 auto;">
+    <section class="intro">
+      <h2>我的随笔 · 朋友圈</h2>
+    </section>
+    <div id="notesList"></div>
+  </main>
+
+  <!-- 背景切换控件（和post.html完全一样） -->
+  <div class="bg-switch">
+    <button id="bgToggleBtn">🎨</button>
+    <div id="bgPanel" class="bg-panel">
+      <div class="bg-option" data-url="assets/background/buddy_bg.jpg"></div>
+      <div class="bg-option" data-url="assets/background/bg1.png"></div>
+      <div class="bg-option" data-url="assets/background/bg2.png"></div>
+      <div class="bg-option" data-url="assets/background/bg3.png"></div>
+      <div class="bg-option" data-url="assets/background/bg4.png"></div>
+      <div class="bg-option" data-url="assets/background/bg5.png"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/music_player.js"></script>
+  <script src="assets/switch_bg.js"></script>
+
+  <script>
+    // ====================== 核心配置 ======================
+    const BASE_URL = "./pyq/";
+    const IMAGE_BASE = BASE_URL + "images/";
+    // ======================================================
+
+    const notesList = document.getElementById("notesList");
+    const imgPreviewMask = document.getElementById("imgPreviewMask");
+    const previewImg = document.getElementById("previewImg");
+
+    window.openImgPreview = (src) => { previewImg.src = src; imgPreviewMask.classList.add("show"); }
+    imgPreviewMask.onclick = () => imgPreviewMask.classList.remove("show");
+
+    window.addEventListener("DOMContentLoaded", loadAllNotes);
+
+    // 自动读取 pyq 目录下所有 _pyq.md 文件
+    async function loadAllNotes() {
+      notesList.innerHTML = "<p>正在加载随笔...</p>";
+      try {
+        const res = await fetch(BASE_URL);
+        const html = await res.text();
+
+        // 🔥 正则自动匹配所有 pyq 随笔文件
+        const regex = /href="([^"]+_pyq\.md)"/g;
+        const fileList = [];
+        let match;
+        while ((match = regex.exec(html)) !== null) {
+          fileList.push(match[1]);
+        }
+
+        if (fileList.length === 0) {
+          notesList.innerHTML = "<p>暂无随笔</p>";
+          return;
+        }
+
+        fileList.sort().reverse();
+        notesList.innerHTML = "";
+
+        for (const file of fileList) {
+          await renderSingleNote(file);
+        }
+      } catch (err) {
+        notesList.innerHTML = "<p>加载失败</p>";
+        console.error(err);
+      }
+    }
+
+    // 渲染单条随笔
+    async function renderSingleNote(fileName) {
+      try {
+        const timeCode = fileName.replace("_pyq.md", "");
+        const timeStr = `${timeCode.slice(0,4)}-${timeCode.slice(4,6)}-${timeCode.slice(6,8)} ${timeCode.slice(9,11)}:${timeCode.slice(11,13)}`;
+
+        const mdRes = await fetch(BASE_URL + fileName);
+        const mdText = await mdRes.text();
+        const content = marked.parse(mdText);
+
+        const imgDir = IMAGE_BASE + timeCode + "/";
+        const imgHtml = await buildImageGrid(imgDir, timeCode);
+
+        const card = document.createElement("div");
+        card.className = "moment-card";
+        card.innerHTML = `
+          <div class="moment-header">
+            <img src="avatar.png" class="moment-avatar">
+            <span class="moment-name">Leo</span>
+          </div>
+          <div class="moment-text">${content}</div>
+          ${imgHtml}
+          <div class="moment-time">${timeStr}</div>
+        `;
+        notesList.appendChild(card);
+      } catch (e) {}
+    }
+
+    // 自动加载图片
+    async function buildImageGrid(imgDir, timeCode) {
+      const exts = ["jpg", "jpeg", "png", "gif", "webp"];
+      const imgList = [];
+      for (let i = 1; i <= 9; i++) {
+        for (const ext of exts) {
+          const url = `${imgDir}${timeCode}_${i}.${ext}`;
+          try {
+            const r = await fetch(url, { method: "HEAD" });
+            if (r.ok) { imgList.push(url); break; }
+          } catch {}
+        }
+      }
+      if (imgList.length === 0) return "";
+      return `
+        <div class="moment-images img-${imgList.length}">
+          ${imgList.map(u => `<img src="${u}" onclick="openImgPreview('${u}')">`).join("")}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

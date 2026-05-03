@@ -1,4 +1,4 @@
-<div class="post-card" style="--card-bg: url('/notes/images/my_life/image.png');">
+<div class="post-card" style="--card-bg: url('/notes/images/my_life/fddm.jpg');">
 
 # 在无常中抛下一个锚点
 
