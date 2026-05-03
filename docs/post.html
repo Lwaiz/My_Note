@@ -11,6 +11,7 @@
   <link rel="apple-touch-icon" href="favicon.png">
 </head>
 <body>
+  <div id="page-background"></div>
   <header class="site-header">
     <div class="site-header-top post-header-top">
       <div class="site-brand">
@@ -66,6 +67,21 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="assets/app.js"></script>
-  <script src="music_player.js"></script>
+  <script src="assets/music_player.js"></script>
+  <script src="assets/switch_bg.js"></script>
+  
+
+  <!-- 背景图片切换控件 -->
+  <div class="bg-switch">
+    <button id="bgToggleBtn">🎨</button>
+    <div id="bgPanel" class="bg-panel">
+      <div class="bg-option" data-url="assets/background/buddy_bg.jpg"></div>
+      <div class="bg-option" data-url="assets/background/bg1.png"></div>
+      <div class="bg-option" data-url="assets/background/bg2.png"></div>
+      <div class="bg-option" data-url="assets/background/bg3.png"></div>
+      <div class="bg-option" data-url="assets/background/bg4.png"></div>
+      <div class="bg-option" data-url="assets/background/bg5.png"></div>
+    </div>
+  </div>
 </body>
 </html>
