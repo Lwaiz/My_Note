@@ -68,7 +68,7 @@
     .moment-images img:hover { transform: scale(1.02); }
     .img-preview-mask {
       position: fixed; top:0; left:0; width:100vw; height:100vh;
-      background:rgba(183, 182, 182, 0.9); z-index:99999; display:none;
+      background:rgba(124, 124, 124, 0.6); z-index:99999; display:none;
       align-items:center; justify-content:center; padding:20px;
     }
     .img-preview-mask.show { display:flex; }
@@ -78,7 +78,11 @@
 <body>
   <div id="page-background"></div>
   <div class="img-preview-mask" id="imgPreviewMask">
-    <img id="previewImg" alt="预览">
+    <div class="preview-btn prev-btn" onclick="prevImage()">‹</div>
+      <img id="previewImg" alt="预览">
+    <div class="preview-btn next-btn" onclick="nextImage()">›</div>
+    <!-- 新增提示文字 -->
+    <div class="preview-tip" id="previewTip"></div>
   </div>
 
   <header class="site-header">
@@ -131,79 +135,140 @@
   <script src="assets/switch_bg.js"></script>
 
   <script>
-    // ====================== 配置 ======================
-    const BASE_URL = "./pyq/";
-    const IMAGE_BASE = BASE_URL + "images/";
-    // ==================================================
+  // ====================== 配置 ======================
+const BASE_URL = "./pyq/";
+const IMAGE_BASE = BASE_URL + "images/";
+// ==================================================
 
-    const notesList = document.getElementById("notesList");
-    const imgPreviewMask = document.getElementById("imgPreviewMask");
-    const previewImg = document.getElementById("previewImg");
+const notesList = document.getElementById("notesList");
+const imgPreviewMask = document.getElementById("imgPreviewMask");
+const previewImg = document.getElementById("previewImg");
+const previewTip = document.getElementById("previewTip");
 
-    window.openImgPreview = (src) => { previewImg.src = src; imgPreviewMask.classList.add("show"); }
-    imgPreviewMask.onclick = () => imgPreviewMask.classList.remove("show");
+// 预览图全局状态
+let previewState = {
+  currentList: [],
+  currentIndex: 0
+};
 
-    window.addEventListener("DOMContentLoaded", loadNotesFromJson);
+// 显示提示
+function showTip(text) {
+  previewTip.innerText = text;
+  previewTip.classList.add("show");
+  setTimeout(() => {
+    previewTip.classList.remove("show");
+  }, 1200);
+}
 
-    // 🔥 适配你的 JSON 格式 { pyq_list: [ ... ] }
-    async function loadNotesFromJson() {
-      notesList.innerHTML = "<p>正在加载随笔...</p>";
-      try {
-        const res = await fetch(BASE_URL + "pyq_list.json");
-        const jsonData = await res.json();
-        const pyqList = jsonData.pyq_list; // 读取列表
+// 打开预览
+window.openImgPreview = (src) => {
+  const img = document.querySelector(`img[src="${src}"]`);
+  const gallery = img.closest('.moment-images');
+  const allImgs = Array.from(gallery.querySelectorAll('img'));
+  
+  previewState.currentList = allImgs.map(i => i.src);
+  previewState.currentIndex = allImgs.indexOf(img);
+  
+  showPreviewImage();
+  imgPreviewMask.classList.add("show");
+};
 
-        if (!pyqList || pyqList.length === 0) {
-          notesList.innerHTML = "<p>暂无随笔</p>";
-          return;
-        }
+// 显示当前索引图片
+function showPreviewImage() {
+  previewImg.src = previewState.currentList[previewState.currentIndex];
+}
 
-        notesList.innerHTML = "";
-        for (const item of pyqList) {
-          await renderSingleNote(item);
-        }
-      } catch (err) {
-        notesList.innerHTML = "<p>加载失败</p>";
-        console.error(err);
-      }
+// 上一张
+window.prevImage = () => {
+  if (previewState.currentIndex <= 0) {
+    showTip("🤚 别看了，已经到第一张了~");
+    return;
+  }
+  previewState.currentIndex--;
+  showPreviewImage();
+};
+
+// 下一张
+window.nextImage = () => {
+  if (previewState.currentIndex >= previewState.currentList.length - 1) {
+    showTip("✌️ 别看了，已经到最后一张了~");
+    return;
+  }
+  previewState.currentIndex++;
+  showPreviewImage();
+};
+
+// 关闭预览
+imgPreviewMask.onclick = (e) => {
+  if (e.target === imgPreviewMask) {
+    imgPreviewMask.classList.remove("show");
+  }
+};
+
+// 键盘左右键切换
+document.addEventListener('keydown', (e) => {
+  if (!imgPreviewMask.classList.contains('show')) return;
+  if (e.key === 'ArrowLeft') prevImage();
+  if (e.key === 'ArrowRight') nextImage();
+});
+
+window.addEventListener("DOMContentLoaded", loadNotesFromJson);
+
+async function loadNotesFromJson() {
+  notesList.innerHTML = "<p>正在加载随笔...</p>";
+  try {
+    const res = await fetch(BASE_URL + "pyq_list.json");
+    const jsonData = await res.json();
+    const pyqList = jsonData.pyq_list;
+
+    if (!pyqList || pyqList.length === 0) {
+      notesList.innerHTML = "<p>暂无随笔</p>";
+      return;
     }
 
-    // 渲染单条（从 JSON 直接取图片，0 遍历 0 404）
-    async function renderSingleNote(item) {
-      try {
-        const { file, timeCode, images } = item;
-        const timeStr = `${timeCode.slice(0,4)}-${timeCode.slice(4,6)}-${timeCode.slice(6,8)} ${timeCode.slice(9,11)}:${timeCode.slice(11,13)}`;
-
-        // 读取 markdown
-        const mdRes = await fetch(BASE_URL + file);
-        const mdText = await mdRes.text();
-        const content = marked.parse(mdText);
-
-        // 直接用 JSON 里的图片名称
-        const imgUrls = images.map(img => `${IMAGE_BASE}${timeCode}/${img}`);
-
-        const imgHtml = imgUrls.length
-          ? `
-          <div class="moment-images img-${imgUrls.length}">
-            ${imgUrls.map(u => `<img src="${u}" onclick="openImgPreview('${u}')">`).join("")}
-          </div>
-          `
-          : "";
-
-        const card = document.createElement("div");
-        card.className = "moment-card";
-        card.innerHTML = `
-          <div class="moment-header">
-            <img src="avatar.png" class="moment-avatar">
-            <span class="moment-name">Leo</span>
-          </div>
-          <div class="moment-text">${content}</div>
-          ${imgHtml}
-          <div class="moment-time">${timeStr}</div>
-        `;
-        notesList.appendChild(card);
-      } catch (e) {}
+    notesList.innerHTML = "";
+    for (const item of pyqList) {
+      await renderSingleNote(item);
     }
-  </script>
+  } catch (err) {
+    notesList.innerHTML = "<p>加载失败</p>";
+    console.error(err);
+  }
+}
+
+async function renderSingleNote(item) {
+  try {
+    const { file, timeCode, images } = item;
+    const timeStr = `${timeCode.slice(0,4)}-${timeCode.slice(4,6)}-${timeCode.slice(6,8)} ${timeCode.slice(9,11)}:${timeCode.slice(11,13)}`;
+
+    const mdRes = await fetch(BASE_URL + file);
+    const mdText = await mdRes.text();
+    const content = marked.parse(mdText);
+
+    const imgUrls = images.map(img => `${IMAGE_BASE}${timeCode}/${img}`);
+
+    const imgHtml = imgUrls.length
+      ? `
+      <div class="moment-images img-${imgUrls.length}">
+        ${imgUrls.map(u => `<img src="${u}" onclick="openImgPreview('${u}')">`).join("")}
+      </div>
+      `
+      : "";
+
+    const card = document.createElement("div");
+    card.className = "moment-card";
+    card.innerHTML = `
+      <div class="moment-header">
+        <img src="avatar.png" class="moment-avatar">
+        <span class="moment-name">Leo</span>
+      </div>
+      <div class="moment-text">${content}</div>
+      ${imgHtml}
+      <div class="moment-time">${timeStr}</div>
+    `;
+    notesList.appendChild(card);
+  } catch (e) {}
+}
+</script>
 </body>
 </html>

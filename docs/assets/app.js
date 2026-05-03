@@ -373,7 +373,7 @@ async function renderMarkdownPost() {
     const md = await fetch(filePath);
     if (!md.ok) throw new Error('Markdown 文件加载失败');
     const text = await md.text();
-    markdownContainer.innerHTML = marked.parse(text);
+    markdownContainer.innerHTML = marked.parse(text, { gfm: true });
     fixMarkdownImages(markdownContainer, baseDir);
     buildTOC();
     postMeta.innerHTML = `
