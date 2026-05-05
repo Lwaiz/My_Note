@@ -5,22 +5,63 @@
       "title": "欢迎来到我的 Markdown 博客",
       "description": "这是一个示例文章。把你的 Markdown 笔记放到 docs/notes 文件夹，并在此 JSON 中添加索引。",
       "date": "2026-05-01",
-      "series": "入门 系列"
+      "series": "入门 系列",
+      "category": "示例文章"
+    },
+    {
+      "slug": "BigTable",
+      "title": "BigTable 技术",
+      "description": "Google BigTable 的技术细节和实现原理。",
+      "date": "2026-05-05",
+      "series": "数据库 系列",
+      "category": "技术笔记"
+    },
+    {
+      "slug": "Spanner",
+      "title": "Spanner 技术",
+      "description": "Google Spanner 的技术细节和实现原理。",
+      "date": "2026-05-05",
+      "series": "数据库 系列",
+      "category": "技术笔记"
+    },
+    {
+      "slug": "LSM-Tree",
+      "title": "LSM-Tree 技术",
+      "description": "Log-Structured Merge-Tree（LSM-Tree）的技术细节和实现原理。",
+      "date": "2026-05-05",
+      "series": "数据库 系列",
+      "category": "存储引擎"
+    },
+    {
+      "slug": "Raft",
+      "title": "Raft 共识算法",
+      "description": "深入解析 Raft 共识算法的工作原理和实现细节。",
+      "date": "2026-05-05",
+      "series": "共识算法 系列",
+      "category": "技术笔记"
+    },
+    {
+      "slug": "Paxos",
+      "title": "Paxos 共识算法",
+      "description": "深入解析 Paxos 共识算法的工作原理和实现细节。",
+      "date": "2026-05-05",
+      "series": "共识算法 系列",
+      "category": "技术笔记"
     },
     {
       "slug": "OB知识",
-      "title": "OceanBase 知识库",
+      "title": "OceanBase 知识",
       "description": "OceanBase基础知识，了解OceanBase框架。",
       "date": "2026-05-01",
       "series": "OceanBase 系列",
-      "category": "OceanBase"
+      "category": "数据库"
     },
     {
       "slug": "Paxos论文",
       "title": "Paxos论文解读",
       "description": "Paxos算法论文的详细解读。",
       "date": "2026-05-01",
-      "series": "OceanBase 系列",
+      "series": "共识算法 系列",
       "category": "论文解读"
     },
     {
@@ -36,7 +77,7 @@
       "title": "Raft论文解读",
       "description": "Raft算法论文的详细解读。",
       "date": "2026-05-03",
-      "series": "OceanBase 系列",
+      "series": "共识算法 系列",
       "category": "论文解读"
     },
     {
@@ -44,7 +85,7 @@
       "title": "Spanner论文解读",
       "description": "Spanner论文的详细解读。",
       "date": "2026-05-03",
-      "series": "OceanBase 系列",
+      "series": "数据库 系列",
       "category": "论文解读"
     },
     {
@@ -52,7 +93,7 @@
       "title": "GFS技术",
       "description": "Google File System（GFS）的技术细节和实现原理。",
       "date": "2026-05-03",
-      "series": "OceanBase 系列",
+      "series": "数据库 系列",
       "category": "技术笔记"
     }
   ]
