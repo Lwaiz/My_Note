@@ -1,0 +1,86 @@
+/* =======================
+ * 主题色彩变量定义
+ * 定义了三套主题：默认（浅色）、黑暗、眼睛（暖色）
+ * 通过切换 html 的 data-theme 属性来应用不同主题
+ * ======================= */
+:root {
+  color-scheme: light;
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --text: #1c1c1e;
+  --muted: #6d6d72;
+  --border: #d8d8d8;
+  --primary: #0969da;
+  --radius: 18px;
+  --bg-overlay-rgb: 255, 255, 255;
+  --chip-bg: rgba(255, 255, 255, 0.8);
+  --chip-hover-bg: rgba(255, 255, 255, 1);
+  --chip-border: rgba(16, 24, 40, 0.08);
+  --panel-bg: rgba(255, 255, 255, 0.6);
+  --toc-box-bg: #f5f7fb;
+  --toc-box-border: #d9e2ef;
+  --toc-hover-bg: rgba(240, 240, 240, 0.8);
+  --toc-active-bg: rgba(245, 248, 255, 0.9);
+  --blockquote-bg: #f4f8ff;
+  --pre-bg: #eceff4;
+  --primary-shadow: rgba(9, 105, 218, 0.24);
+  --primary-shadow-hover: rgba(9, 105, 218, 0.3);
+  
+  /* ========== 背景图片配置 ========== */
+  --bg-image: url('background/buddy_bg.jpg');
+  --bg-size: cover;
+  --bg-repeat: no-repeat;
+  --bg-position: center;
+  --bg-attachment: fixed;
+  --bg-opacity: 0.85;
+}
+
+/* 黑暗主题：基于深色调，整体偏冷，适合喜欢简洁现代风格的用户 */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #111827;
+  --surface: #0f172a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #374151;
+  --primary: #60a5fa;
+  --bg-overlay-rgb: 2, 6, 23;
+  --chip-bg: rgba(15, 23, 42, 0.78);
+  --chip-hover-bg: rgba(15, 23, 42, 0.95);
+  --chip-border: rgba(148, 163, 184, 0.28);
+  --panel-bg: rgba(15, 23, 42, 0.65);
+  --toc-box-bg: rgba(17, 24, 39, 0.9);
+  --toc-box-border: #334155;
+  --toc-hover-bg: rgba(30, 41, 59, 0.7);
+  --toc-active-bg: rgba(59, 130, 246, 0.2);
+  --blockquote-bg: rgba(30, 41, 59, 0.65);
+  --pre-bg: #1f2937;
+  --primary-shadow: rgba(96, 165, 250, 0.2);
+  --primary-shadow-hover: rgba(96, 165, 250, 0.3);
+  --bg-opacity: 0.65;
+}
+
+/* 眼睛主题：基于浅色调，整体偏暖，适合喜欢柔和自然风格的用户 */
+html[data-theme='eye'] {
+  color-scheme: light;
+  --bg: #e8ebdc;
+  --surface: #f3f5e8;
+  --text: #273126;
+  --muted: #556255;
+  --border: #b8c2a8;
+  --primary: #2a6b2d;
+  --bg-overlay-rgb: 232, 235, 220;
+  --chip-bg: rgba(247, 251, 242, 0.92);
+  --chip-hover-bg: rgba(247, 251, 242, 1);
+  --chip-border: rgba(47, 125, 50, 0.2);
+  --panel-bg: rgba(247, 251, 242, 0.72);
+  --toc-box-bg: #f2f8eb;
+  --toc-box-border: #d2dfc5;
+  --toc-hover-bg: rgba(227, 239, 216, 0.9);
+  --toc-active-bg: rgba(215, 234, 196, 0.95);
+  --blockquote-bg: #eaf4dc;
+  --pre-bg: #ddebd0;
+  --primary-shadow: rgba(47, 125, 50, 0.2);
+  --primary-shadow-hover: rgba(47, 125, 50, 0.3);
+  --bg-opacity: 0.78;
+}

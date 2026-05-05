@@ -1,0 +1,418 @@
+/* ======================
+ *   头像 + 博客名称容器 
+ * ====================== */
+.brand-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+}
+
+.brand-link:hover {
+  text-decoration: none;
+}
+
+.brand-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 20%;
+  object-fit: cover;
+  border: 0px solid var(--chip-hover-bg);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
+}
+
+/* ======================
+ * site-actions: 头部右侧操作按钮/导航
+ * ======================*/
+.site-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: -5px;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--text);
+  border: 1px solid var(--chip-border);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.site-nav a:hover {
+  background: var(--chip-hover-bg);
+  transform: translateY(-1px);
+}
+
+.header-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: -5px;
+}
+
+/* 主题切换按钮 */
+.theme-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+  transform: translateY(-1px);
+  background: var(--chip-hover-bg);
+}
+
+.theme-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* 搜索框 */
+.search-wrap input {
+  border: none;
+  outline: none;
+  width: 180px;
+  font-size: 0.95rem;
+  background: transparent;
+  color: var(--text);
+}
+
+.search-wrap {
+  display: inline-flex;
+  align-items: center;
+  background: var(--chip-hover-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+/* 个人中心链接按钮 */
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* 系列过滤按钮 */
+.series-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--chip-border);
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filter-btn-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.filter-btn-active:hover {
+  box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.4);
+}
+
+/* 文章卡片 */
+.post-card {
+  background: var(--card-bg, var(--panel-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.15);
+}
+
+/* 系列卡片 */
+.series-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  backdrop-filter: blur(8px);
+}
+
+.series-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.0rem;
+}
+
+.series-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.post-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+
+.post-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* 文章元信息 */
+.post-meta {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
+.post-meta p {
+  margin: 0;
+}
+
+.post-meta p + p {
+  margin-top: 12px;
+}
+
+/* 返回列表按钮 */
+.back-to-list-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 18px var(--primary-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-to-list-button:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px var(--primary-shadow-hover);
+}
+
+/* Markdown 容器样式 */
+.markdown-body {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  font-size: 1.25rem;
+  backdrop-filter: blur(6px);
+}
+
+/* 个人中心头像 */
+.profile-page .profile-avatar {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 20%;
+  border: 3px solid var(--chip-hover-bg);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+  margin: 0 auto 18px;
+}
+
+/* 侧边栏个人中心卡片 */
+.post-profile-card {
+  flex-shrink: 0;
+  margin-top: 0 !important;
+  border: 1px solid var(--toc-box-border);
+  border-radius: 14px;
+  background: var(--toc-box-bg);
+  overflow: hidden;
+}
+.post-profile-link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  color: var(--text);
+  text-decoration: none;
+}
+.post-profile-link:hover {
+  text-decoration: none;
+  background: var(--toc-hover-bg);
+}
+.post-profile-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--panel-bg);
+  font-size: 1.2rem;
+}
+.post-profile-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.post-profile-desc {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.7 !important;
+  letter-spacing: 0.02em;
+}
+
+/* 目录导航样式 */
+.toc-section details {
+  background: var(--toc-box-bg);
+  border: 1px solid var(--toc-box-border);
+  border-radius: 14px;
+  padding: 0;
+  border: none;
+}
+.toc-section summary {
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+  list-style: none;
+}
+.toc-section summary::-webkit-details-marker {
+  display: none;
+}
+.toc-section summary::before {
+  content: '▾';
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+}
+.toc-section details[open] summary::before {
+  transform: rotate(180deg);
+}
+
+/* 目录滚动条 */
+.toc-section::-webkit-scrollbar {
+  width: 6px;
+}
+.toc-section::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+/* 目录导航列表 */
+.toc-nav {
+  padding-left: 0;
+  margin: 0;
+  font-size: 1.1rem;
+}
+.toc-nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-nav li {
+  margin: 6px 0;
+}
+.toc-nav a {
+  color: var(--primary);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-left: 3px solid transparent;
+  display: block;
+  transition: all 0.2s ease;
+}
+.toc-nav a:hover {
+  text-decoration: underline;
+  background: var(--toc-hover-bg);
+}
+.toc-nav a.active {
+  color: var(--primary);
+  border-left-color: var(--primary);
+  background: var(--toc-active-bg);
+  font-weight: 600;
+}
+
+/* 微信二维码 */
+.wechat-qr {
+  text-align: center;
+  margin-top: 30px;
+}
+.wechat-qr img {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  border: 3px solid var(--primary);
+  box-shadow: 0 4px 12px var(--primary-shadow);
+}
+.wechat-qr p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* 文章展开/收起按钮 */
+.post-controls {
+  text-align: center;
+  margin: 20px 0;
+}
+.toggle-btn {
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--primary-shadow);
+  display: none;
+}
+.toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--primary-shadow-hover);
+}

@@ -1,0 +1,54 @@
+
+/* =======================
+ * 图片预览样式
+ * ======================= */
+.img-preview-mask {
+  position: fixed; top:0; left:0; width:100vw; height:100vh;
+  background:rgba(124, 124, 124, 0.6); z-index:99999; display:none;
+  align-items:center; justify-content:center; padding:20px;
+}
+.img-preview-mask.show { display:flex; }
+.img-preview-mask img { max-width:90%; max-height:90%; border-radius:8px; object-fit:contain; }
+
+/* 预览左右按钮 */
+.preview-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.preview-btn:hover { background: rgba(0,0,0,0.6); }
+.prev-btn { left: 50px; }
+.next-btn { right: 70px; }
+
+/* 图片预览提示文字 */
+.preview-tip {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 11;
+}
+.preview-tip.show {
+  opacity: 1;
+}

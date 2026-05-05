@@ -1,0 +1,135 @@
+/* =======================================
+ * APlayer 音乐播放器 自定义样式
+ * ======================================= */
+.aplayer {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-sizing: border-box !important;
+}
+
+.aplayer-fixed {
+  box-shadow: 0 -5px 15px rgba(0,0,0,.05) !important;
+  transition: left 0.15s ease, bottom 0.15s ease;
+  width: auto !important;
+  display: block !important;
+  min-width: 400px !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
+.aplayer .aplayer-body {
+  width: auto !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+.aplayer .aplayer-list-wrap {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+.aplayer .aplayer-list {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  max-height: 280px !important;
+  left: 0 !important;
+  right: 0 !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+.aplayer-list .aplayer-list-item {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 12px !important;
+  gap: 8px !important;
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 13px !important;
+  color: #171717 !important;
+}
+
+.aplayer-list-index {
+  flex-shrink: 0 !important;
+  width: 24px !important;
+  text-align: left !important;
+}
+
+.aplayer-list-name {
+  flex: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
+}
+
+.aplayer-list-author {
+  flex-shrink: 0 !important;
+  max-width: 35% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: right !important;
+}
+
+.aplayer-list .aplayer-list-light {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-radius: 6px !important;
+  margin: 2px 8px !important;
+}
+.aplayer-list .aplayer-list-item:hover {
+  background: rgba(212, 206, 206, 0.06) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  border-radius: 6px !important;
+  margin: 2px 8px !important;
+  transition: background 0.2s ease !important;
+}
+
+.aplayer-title {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 14px !important;
+  color: #100f0f !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.aplayer-author {
+  font-family: "微软雅黑", "苹方", sans-serif !important;
+  font-size: 12px !important;
+  color: #201f1f !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.aplayer.aplayer-fixed .aplayer-list-wrap,
+.aplayer.aplayer-fixed .aplayer-list {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  box-sizing: border-box !important;
+}
+

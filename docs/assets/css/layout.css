@@ -1,0 +1,214 @@
+/* ===================== 
+ *   页面头部和底部设置 
+ * ===================== */
+.site-header,
+.site-footer {
+  max-width: unset;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.site-header {
+  padding-top: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: transparent !important;
+  border-bottom: none !important;
+  transition: transform 0.22s ease;
+}
+
+/* 头部内部容器 */
+.site-header-top {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none !important;
+}
+
+.site-header.is-hidden {
+  transform: translateY(calc(-100% - 8px));
+}
+
+.site-header-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* 头像+博客名称容器 */
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 50px;
+  border-radius: 16px;
+  background: rgba(var(--bg-overlay-rgb), 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: 
+    linear-gradient(to top, transparent, black 15%),
+    linear-gradient(to bottom, transparent, black 15%),
+    linear-gradient(to left, transparent, black 15%),
+    linear-gradient(to right, transparent, black 15%);
+  mask-image: 
+    linear-gradient(to top, transparent, black 15%),
+    linear-gradient(to bottom, transparent, black 15%),
+    linear-gradient(to left, transparent, black 15%),
+    linear-gradient(to right, transparent, black 15%);
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.0rem);
+}
+
+.site-header p,
+.site-footer p {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+.post-header-top {
+  align-items: center;
+}
+
+/* 内容区布局 */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+/* =====================
+ * 文章布局：左目录 + 右内容 
+ * ===================== */
+.post-content {
+  display: flex;
+  gap: 30px;
+}
+
+/* 目录侧边栏 */
+.post-sidebar {
+  flex: 0 0 260px;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--panel-bg);
+  padding: 16px;
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+}
+
+#article {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 平板及以下屏幕：竖向布局 */
+@media (max-width: 1024px) {
+  .post-content {
+    flex-direction: column;
+  }
+  .post-sidebar {
+    position: static;
+    max-height: none;
+    flex: 1;
+  }
+}
+
+/* 归档/分类/友情链接页面布局 */
+.site-section h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+#archive-list,
+#categories-list {
+  font-size: 16px;
+  line-height: 2;
+}
+
+.friend-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+  font-size: 16px;
+}
+
+/* 个人中心页面布局 */
+.profile-page {
+  max-width: 1000px;
+}
+.profile-page .markdown-body {
+  font-size: 1.2rem;
+}
+.profile-page .markdown-body p,
+.profile-page .markdown-body li {
+  line-height: 2;
+}
+.profile-page .markdown-body h1 {
+  font-size: 2.0rem;
+}
+.profile-page .markdown-body h2 {
+  font-size: 1.5rem;
+}
+
+/* 响应式适配（头部） */
+@media (max-width: 820px) {
+  .site-header-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-actions {
+    justify-content: space-between;
+  }
+
+  .search-wrap input {
+    width: 140px;
+  }
+}
+
+/* 文章列表网格布局 */
+.post-list {
+  display: grid;
+  gap: 20px;
+}
+
+.section-grid {
+  display: grid;
+  gap: 14px;
+}
+
+#series-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 820px) {
+  #series-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 目录侧边栏布局（目录+个人中心） */
+.post-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 92vh;
+}
+.toc-section {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--toc-box-bg);
+  border: 1px solid var(--toc-box-border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 0;
+}
