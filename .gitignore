@@ -5,7 +5,7 @@
 # 1. 忽略 FlowUs 导出的原始图片文件夹（带+号的目录）
 *+*
 *+*/**
-# 忽略文件夹
+# 忽略flowus转化文件夹
 process_flowus
 
 # 2. 忽略图片处理脚本 / 临时文件
@@ -31,7 +31,4 @@ Thumbs.db
 !docs/**
 
 # 6. 忽略local-write.html 文件
-local-write.html
-app.py
-
-app/
+.env

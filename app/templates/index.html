@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>本地写作工具</title>
+    <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>本地写作（自动保存到E盘）</h2>
+<div class="tab">
+  <button id="btn-blog" class="active" onclick="showBlog()">写博客</button>
+  <button id="btn-pyq" onclick="showPyq()">写随笔</button>
+</div>
+
+<!-- 博客 -->
+<div class="panel active" id="blog-panel">
+  <input type="text" id="title" placeholder="文章标题" onchange="checkBlogTitleExist()">
+  <textarea id="content" placeholder="Markdown 内容"></textarea>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <input type="file" id="blogImg" multiple accept="image/*" onchange="insertBlogImage()" style="margin-bottom:0;flex:1;">
+    <button class="load-json" style="width:auto;white-space:nowrap;" onclick="openBlogImgManageModal()">管理图片</button>
+  </div>
+  <button class="save" onclick="saveBlog()">保存博客</button>
+
+  <textarea id="blogJson" class="json-textarea" placeholder="JSON 内容（自动生成）"></textarea>
+  <div class="btn-row">
+    <button class="load-json" onclick="loadBlogJson()">读取现有JSON</button>
+    <button class="save-json" onclick="saveBlogJson()">保存JSON</button>
+    <button class="del-popup-btn" onclick="openBlogDeleteModal()">查看列表并删除</button>
+  </div>
+</div>
+
+<!-- 随笔 -->
+<div class="panel" id="pyq-panel">
+  <textarea id="pyqContent" placeholder="随笔内容"></textarea>
+  <input type="file" id="pyqImg" multiple accept="image/*" onchange="addPyqImages()">
+  <div id="pyqPreviewBox" style="display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;"></div>
+  <button class="save" onclick="savePyq()">保存随笔</button>
+
+  <textarea id="pyqJson" class="json-textarea" placeholder="JSON 内容（自动生成）"></textarea>
+  <div class="btn-row">
+    <button class="load-json" onclick="loadPyqJson()">读取现有JSON</button>
+    <button class="save-json" onclick="savePyqJson()">保存JSON</button>
+    <button class="del-popup-btn" onclick="openPyqDeleteModal()">查看列表并删除</button>
+  </div>
+</div>
+
+<!-- 博客图片管理弹窗 -->
+<div id="blogImgManageModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">当前博客图片列表</div>
+    <div id="blogImgManageList" style="max-height:60vh;overflow-y:auto;"></div>
+    <div class="modal-buttons" style="margin-top:15px;">
+      <button class="modal-close" style="width:100%;" onclick="closeBlogImgManageModal()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 博客删除弹窗 -->
+<div id="blogModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">选择要删除的博客</div>
+    <div id="blogModalItems"></div>
+    <div class="modal-buttons">
+      <button class="modal-close" onclick="closeBlogModal()">取消</button>
+      <button class="modal-confirm" onclick="confirmDeleteBlog()">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- 随笔删除弹窗 -->
+<div id="pyqModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">选择要删除的随笔</div>
+    <div id="pyqModalItems"></div>
+    <div class="modal-buttons">
+      <button class="modal-close" onclick="closePyqModal()">取消</button>
+      <button class="modal-confirm" onclick="confirmDeletePyq()">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- Git 提交区域 -->
+<div class="divider"></div>
+<div class="git-title">📤 Git 提交</div>
+<button class="git-all-btn" onclick="gitAll()">✅ 提交并推送（一键）</button>
+<input type="text" id="commitMsg" class="git-msg" placeholder="提交说明">
+<div class="git-buttons">
+  <button class="git-btn" onclick="gitAdd()">git add .</button>
+  <button class="git-btn" onclick="gitStatus()">git status</button>
+  <button class="git-btn" onclick="gitCommit()">git commit</button>
+  <button class="git-btn" onclick="gitPush()">git push</button>
+</div>
+<div id="gitLog" class="git-log">等待执行命令...</div>
+
+<!-- 引入JS脚本文件 -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
