@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>本地写作工具</title>
+    <title>Leo's Blog 写作工具</title>
+    <!-- 网页图标（加到<head>标签里） -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <!-- 引入CSS样式文件 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h2>本地写作（自动保存到E盘）</h2>
+<!-- 居中大标题 + 左侧图标 -->
+<h1 style="display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 28px; color: #333; margin: 20px 0;">
+  <!-- 左侧你的图标（自动读取static文件夹） -->
+  <img src="{{ url_for('static', filename='blog_favicon.png') }}" 
+       style="width: 36px; height: 36px; object-fit: contain;border-radius: 8px;">
+  Leo's Blog 写作工具
+  <img src="{{ url_for('static', filename='favicon.png') }}" 
+       style="width: 36px; height: 36px; object-fit: contain;">
+</h1>
 <div class="tab">
   <button id="btn-blog" class="active" onclick="showBlog()">写博客</button>
   <button id="btn-pyq" onclick="showPyq()">写随笔</button>
