@@ -1,7 +1,7 @@
 
 # 个人中心
 
-<img src="../avatar.png" alt="Leo 头像" class="profile-avatar" />
+<img src="../assets/images/avatar.png" alt="Leo 头像" class="profile-avatar" />
 
 你好，我是 **Leo**，欢迎来到我的个人主页。
 
@@ -26,11 +26,10 @@
 
 ### 微信
 <div class="wechat-qr">
-  <img src="../wechat-qr.png" alt="微信二维码" />
+  <img src="../assets/images/wechat-qr.png" alt="微信二维码" />
   <p>vx: Slowly01_nhm</p>
   <p>扫码添加微信，欢迎交流~</p>
 </div>
-
 ---
 
 💡 **持续学习，持续分享，不断进步**
