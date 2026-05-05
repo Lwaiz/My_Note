@@ -1088,6 +1088,10 @@ a:hover {
   cursor: pointer;
   font-size: 22px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+#bgToggleBtn:hover {
+  transform: scale(1.08);
 }
 
 .bg-panel {
@@ -1100,12 +1104,22 @@ a:hover {
   -webkit-backdrop-filter: blur(16px);
   padding: 12px;
   border-radius: 12px;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  flex-direction: column;
+  gap: 12px;
 }
 
 .bg-panel.show {
+  display: flex;
+}
+
+/* 选项容器 */
+.tab-content {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.tab-content.show {
   display: grid;
 }
 
@@ -1117,9 +1131,41 @@ a:hover {
   background-position: center;
   cursor: pointer;
   border: 2px solid transparent;
+  transition: all 0.2s ease;
 }
 .bg-option:hover {
   border-color: #fff;
+  transform: scale(1.03);
+}
+
+/* 底部按钮组 */
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  color: #333;
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.1)
+}
+/* 激活状态的按钮 */
+.tab-btn.active {
+  background: rgba(46, 45, 45, 0.4);
+  font-weight: bold;
+}
+/* 鼠标悬浮效果 */
+.tab-btn:hover {
+  background: rgba(101, 100, 100, 0.3);
 }
 
 /* =======================

@@ -1,0 +1,33 @@
+  <!-- 背景图片切换控件 -->
+<div class="bg-switch">
+  <button id="bgToggleBtn">🎨</button>
+  <div id="bgPanel" class="bg-panel">
+
+    <!-- 图片背景面板（默认显示） -->
+    <div id="imageTab" class="tab-content show">
+      <div class="bg-option" data-url="assets/background/buddy_bg.jpg"></div>
+      <div class="bg-option" data-url="assets/background/bg1.png"></div>
+      <div class="bg-option" data-url="assets/background/bg2.png"></div>
+      <div class="bg-option" data-url="assets/background/bg3.png"></div>
+      <div class="bg-option" data-url="assets/background/bg4.png"></div>
+      <div class="bg-option" data-url="assets/background/bg5.png"></div>
+    </div>
+
+    <!-- 纯色背景面板（默认隐藏） -->
+    <div id="colorTab" class="tab-content">
+      <div class="bg-option" data-color="#ffffff"></div>
+      <div class="bg-option" data-color="#f5f5dc"></div>
+      <div class="bg-option" data-color="#aacfd0"></div>
+      <div class="bg-option" data-color="#cbd5e1"></div>
+      <div class="bg-option" data-color="#64748b"></div>
+      <div class="bg-option" data-color="#0f172a"></div>
+    </div>
+
+    <!-- 底部切换按钮 -->
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-target="imageTab">图片背景</button>
+      <button class="tab-btn" data-target="colorTab">纯色背景</button>
+    </div>
+
+  </div>
+</div>

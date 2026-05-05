@@ -52,16 +52,14 @@
   
 
   <!-- 背景图片切换控件 -->
-  <div class="bg-switch">
-    <button id="bgToggleBtn">🎨</button>
-    <div id="bgPanel" class="bg-panel">
-      <div class="bg-option" data-url="assets/background/buddy_bg.jpg"></div>
-      <div class="bg-option" data-url="assets/background/bg1.png"></div>
-      <div class="bg-option" data-url="assets/background/bg2.png"></div>
-      <div class="bg-option" data-url="assets/background/bg3.png"></div>
-      <div class="bg-option" data-url="assets/background/bg4.png"></div>
-      <div class="bg-option" data-url="assets/background/bg5.png"></div>
-    </div>
-  </div>
+  <script>
+  fetch('assets/switch_bg.html')
+    .then(res => res.text())
+    .then(html => {
+      document.body.insertAdjacentHTML('beforeend', html)
+      initBgSwitch();
+    })
+  </script>
+  
 </body>
 </html>

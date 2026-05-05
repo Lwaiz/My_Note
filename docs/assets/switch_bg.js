@@ -1,59 +1,88 @@
-
-
-// ==============================
-// 背景图片切换功能（安全集成版）
-// ==============================
-// ==============================
-// 全局背景切换（三页面同步记忆）
-// ==============================
-document.addEventListener('DOMContentLoaded', () => {
+// 等异步引入的按钮HTML渲染完成后再初始化
+function initBgSwitch() {
   const btn = document.getElementById('bgToggleBtn');
   const panel = document.getElementById('bgPanel');
   const options = document.querySelectorAll('.bg-option');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
 
-  if (!btn || !panel || !options.length) return;
+  if (!btn || !panel) return;
 
-  // 初始化缩略图
+  // 初始化缩略图/纯色
   options.forEach(opt => {
     const url = opt.dataset.url;
-    if (url) opt.style.backgroundImage = `url(${url})`;
+    const color = opt.dataset.color;
+    if (url) {
+      opt.style.backgroundImage = `url(${url})`;
+      opt.style.backgroundSize = 'cover';
+      opt.style.backgroundPosition = 'center';
+    } else if (color) {
+      opt.style.backgroundColor = color;
+      opt.style.backgroundImage = 'none';
+    }
   });
 
-  // 读取记忆的背景
-  const savedBg = localStorage.getItem('siteBackground');
-  if (savedBg) {
-    setBackground(savedBg);
+  // 读取本地记忆
+  const savedType = localStorage.getItem('bgType');
+  const savedValue = localStorage.getItem('bgValue');
+  if (savedType && savedValue) {
+    setBg(savedType, savedValue);
   }
 
-  // 展开/收起面板
+  // 展开收起面板
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     panel.classList.toggle('show');
   });
 
-  // 点击切换背景 + 保存记忆
+  // 标签切换
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const target = btn.dataset.target;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(t => t.classList.remove('show'));
+      btn.classList.add('active');
+      document.getElementById(target).classList.add('show');
+    });
+  });
+
+  // 点击选项切换背景
   options.forEach(opt => {
     opt.addEventListener('click', (e) => {
       e.stopPropagation();
       const url = opt.dataset.url;
+      const color = opt.dataset.color;
       if (url) {
-        setBackground(url);
-        localStorage.setItem('siteBackground', url);
-        panel.classList.remove('show');
+        setBg('image', url);
+        localStorage.setItem('bgType', 'image');
+        localStorage.setItem('bgValue', url);
+      } else if (color) {
+        setBg('color', color);
+        localStorage.setItem('bgType', 'color');
+        localStorage.setItem('bgValue', color);
       }
+      panel.classList.remove('show');
     });
   });
 
-  // 点击空白关闭
+  // 空白关闭
   document.addEventListener('click', () => {
     panel.classList.remove('show');
   });
+}
 
-  function setBackground(url) {
-    document.body.style.backgroundImage = `url(${url})`;
+// 设置背景
+function setBg(type, value) {
+  if (type === 'image') {
+    document.body.style.backgroundImage = `url(${value})`;
+    document.body.style.backgroundColor = 'transparent';
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.transition = 'background 0.5s ease';
+  } else {
+    document.body.style.backgroundImage = 'none';
+    document.body.style.backgroundColor = value;
   }
-});
+  document.body.style.transition = 'all 0.5s ease';
+}

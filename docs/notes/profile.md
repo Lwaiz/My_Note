@@ -14,8 +14,8 @@
 
 ## 🚀 快速入口
 
-- [返回首页](../index.html)
-- [笔记列表](../index.html#series)
+- [返回首页](https://lwaiz.github.io/My_Note/)
+- [随笔页面](https://lwaiz.github.io/My_Note/pyq.html)
 - [GitHub](https://github.com/Lwaiz)
 
 ## 📮 联系方式
@@ -24,12 +24,11 @@
 - **Email**：your-email@example.com
 - **博客**：https://Lwaiz.github.io/My_Note/
 
-### 微信
+- **微信**：
 <div class="wechat-qr">
   <img src="../assets/images/wechat-qr.png" alt="微信二维码" />
   <p>vx: Slowly01_nhm</p>
   <p>扫码添加微信，欢迎交流~</p>
 </div>
----
 
 💡 **持续学习，持续分享，不断进步**
