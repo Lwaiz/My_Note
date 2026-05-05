@@ -15,11 +15,17 @@
 <!-- 居中大标题 + 左侧图标 -->
 <h1 style="display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 28px; color: #333; margin: 20px 0;">
   <!-- 左侧你的图标（自动读取static文件夹） -->
-  <img src="{{ url_for('static', filename='blog_favicon.png') }}" 
-       style="width: 36px; height: 36px; object-fit: contain;border-radius: 8px;">
+  <a href="https://lwaiz.github.io/My_Note/" target="_blank" style="text-decoration: none;">
+    <img src="{{ url_for('static', filename='blog_favicon.png') }}" 
+         style="width: 36px; height: 36px; object-fit: contain; border-radius: 8px; cursor: pointer; margin-top: 10px;"
+         title="点击访问 Leo's Blog 的 GitHub Page 博客">
+  </a>
   Leo's Blog 写作工具
-  <img src="{{ url_for('static', filename='favicon.png') }}" 
-       style="width: 36px; height: 36px; object-fit: contain;">
+  <a href="http://localhost:8000/index.html" target="_blank" style="text-decoration: none;">
+    <img src="{{ url_for('static', filename='favicon.png') }}" 
+       style="width: 36px; height: 36px; object-fit: contain;" 
+       title="点击访问 Leo's Blog 的 本地页面(预览)">
+  </a>
 </h1>
 <div class="tab">
   <button id="btn-blog" class="active" onclick="showBlog()">写博客</button>
