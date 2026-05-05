@@ -1,5 +1,10 @@
 # GFS
-Ghemawat S, Gobioff H, Leung S T. [The Google file system](https://scholar.google.com.hk/scholar?hl=zh-CN&as_sdt=0%2C5&q=The+Google+file+system&btnG=)[C]//Proceedings of the nineteenth ACM symposium on Operating systems principles. 2003: 29-43.
+---
+Ghemawat S, Gobioff H, Leung S T. 
+[The Google file system](https://scholar.google.com.hk/scholar?hl=zh-CN&as_sdt=0%2C5&q=The+Google+file+system&btnG=)
+[C]//Proceedings of the nineteenth ACM symposium on Operating systems principles. 2003: 29-43.
+
+---
 
 **Google File System （GFS）（谷歌文件系统）**
 
@@ -9,10 +14,10 @@ Ghemawat S, Gobioff H, Leung S T. [The Google file system](https://scholar.googl
 
 Google File System (GFS) 是由 Google 在 2003 年提出的分布式文件系统，专为大规模数据密集型应用（如搜索引擎、日志存储）设计。其核心目标是在**普通商用硬件**上实现**高吞吐量**、**高容错性**、**可扩展性**的存储服务。
 
-[zhuanlan.zhihu.com](https://zhuanlan.zhihu.com/p/1948841153492386388)
+[知乎 - Google GFS 深度解析：分布式文件系统的开山之作](https://zhuanlan.zhihu.com/p/1948841153492386388)
 
 
-[blog.csdn.net](https://blog.csdn.net/HugeBrian/article/details/119357226)
+[CSDN - 三分钟带你弄懂GFS（Google File System）](https://blog.csdn.net/HugeBrian/article/details/119357226)
 
 
 ## 设计目标

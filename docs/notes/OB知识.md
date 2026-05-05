@@ -1,6 +1,6 @@
 # OceanBase知识
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682187)
+[OceanBase - OceanBase 数据库整体架构](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682187)
 
 
 OB 的特性如下：
@@ -59,7 +59,7 @@ OceanBase 数据库（OceanBase Database）是一款完全自研的企业级原�
 
 ## 产品架构
 
-[https://blog.csdn.net/f80407515/article/details/128225287](https://blog.csdn.net/f80407515/article/details/128225287)
+[CSDN - OceanBase-概述](https://blog.csdn.net/f80407515/article/details/128225287)
 
 
 OceanBase 社区版数据库内核开源， 与 MySQL 兼容，对接虚拟化和大数据技术及产品，支持多种图形化的开发工具、运维监控工具和数据迁移工具；同时社区版提供开放的接口和丰富的生态能力，支持企业或个人更好的实现定制化业务需求。
@@ -192,7 +192,7 @@ SS 模式：共享对象存储、存算分离、本地缓存，云化弹性负�
 
 # OB整体架构
 
-[open.oceanbase.com](https://open.oceanbase.com/blog/10900143)
+[OceanBase - 数据库系列之OceanBase整体架构及安装部署](https://open.oceanbase.com/blog/10900143)
 
 
 ## 集群架构
@@ -473,7 +473,7 @@ OceanBase Database Proxy（简称 ODP）是OceanBase数据库专用的代理服�
 
 OceanBase 集群的数据库实例内部由不同的组件相互协作，这些组件从底层向上由 **多租户层、存储层、复制层、均衡层、事务层、SQL 层、接入层** 组成。
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682187)
+[OceanBase - OceanBase 数据库整体架构](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682187)
 
 
 ## 多租户层
@@ -1064,10 +1064,7 @@ SQL 层：六阶段流水线处理 SQL，三类执行计划 + 计划缓存 + 并
 
 # 多租户架构
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682719)
-
-
-
+[OceanBase - 多租户架构概述](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682719)
 
 
 
@@ -1075,14 +1072,14 @@ SQL 层：六阶段流水线处理 SQL，三类执行计划 + 计划缓存 + 并
 
 # 事务管理
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005683256)
+[OceanBase - 事务简介](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005683256)
 
-
+---
 
 
 # 存储架构
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682693)
+[OceanBase - 存储架构概述](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682693)
 
 
 ![image.png](images/OB知识/image_18.png)
@@ -1093,9 +1090,9 @@ SQL 层：六阶段流水线处理 SQL，三类执行计划 + 计划缓存 + 并
 
 # OBServer节点架构
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682710)
+[OceanBase - OBServer 节点安装目录结构](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005682710)
 
-
+---
 
 
 
@@ -1104,18 +1101,18 @@ SQL 层：六阶段流水线处理 SQL，三类执行计划 + 计划缓存 + 并
 
 ## 转储管理
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005684842)
+[OceanBase - 转储管理概述](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005684842)
 
-
+---
 
 
 
 
 ## 合并管理
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005684834)
+[OceanBase - 合并管理概述](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005684834)
 
-
+---
 
 
 
@@ -1124,6 +1121,6 @@ SQL 层：六阶段流水线处理 SQL，三类执行计划 + 计划缓存 + 并
 
 # OB术语
 
-[www.oceanbase.com](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005688389)
+[OceanBase - OceanBase 术语](https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000005688389)
 
-
+---

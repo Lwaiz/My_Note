@@ -2,10 +2,10 @@
 
 Spanner 是 Google 在 2013 年发表于 **ACM TOCS** 的经典论文，系统介绍了 Google 自研的**全球分布式、可扩展、多版本、同步复制** 数据库 Spanner，核心突破是**全球规模下实现外部一致性分布式事务**。
 
-[www.cnblogs.com](https://www.cnblogs.com/brianleelxt/p/13449540.html#autoid-3-2-2)
+[CnBlogs - Spanner 总结](https://www.cnblogs.com/brianleelxt/p/13449540.html#autoid-3-2-2)
 
 
-[zhuanlan.zhihu.com](https://zhuanlan.zhihu.com/p/338578860)
+[知乎 - 浅谈Spanner](https://zhuanlan.zhihu.com/p/338578860)
 
 
 # 设计目标
