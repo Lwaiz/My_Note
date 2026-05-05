@@ -1,5 +1,5 @@
 # Leo's Blog
-
+- 📌 访问网址：👉  [Leo's Blog](https://lwaiz.github.io/My_Note/index.html)  👈
 - ✨ 基于 GitHub Pages 搭建的静态个人博客 
 
 - ✨ 配套本地 Flask 写作管理工具
@@ -70,7 +70,7 @@ My_Note/                   # Leo's Blog 根目录
 ```
 
 ---
-## 使用方法
+## 🚀 使用方法
 - 打开Github仓库设置，启用 GitHub Pages，选择 `docs/` 文件夹作为发布源。
 - 可直接使用 app 功能进行博客、随笔的本地写作，再通过集成的 Git 操作上传至 Github。等待 1min 左右刷新页面更新。
 - 也可通过以下操作手动处理博客、随笔。
