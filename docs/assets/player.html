@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>播放器</title>
+  <link rel="stylesheet" href="css/player.css">
+  <style>
+    html, body {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+    }
+    #playerWrap {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div id="playerWrap">
+  <!-- 迷你模式 -->
+  <div class="mini-player" id="miniPlayer">
+    <img class="mini-cover" id="miniCover" alt="">
+    <button class="mini-play-btn" id="miniPlayBtn">▶</button>
+  </div>
+
+  <!-- 横向展开播放器 -->
+  <div class="full-player" id="fullPlayer">
+    <div class="player-main" id="dragBar">
+      <img class="cover" id="cover" alt="">
+      <div class="info">
+        <div class="song-name" id="songName">--</div>
+        <div class="song-artist" id="songArtist">--</div>
+      </div>
+      <div class="ctrls">
+        <button id="prevBtn">⏮</button>
+        <button id="playBtn">▶</button>
+        <button id="nextBtn">⏭</button>
+        <button id="listBtn">☰</button>
+      </div>
+      <button class="collapse-btn" id="collapseBtn">◀</button>
+    </div>
+    <!-- 歌单容器（直接渲染，不用额外滚动容器，避免结构错误） -->
+    <div class="list-wrap" id="listWrap"></div>
+  </div>
+</div>
+
+<audio id="audio" preload="metadata">
+
+<script src="player.js"></script>
+
+</body>
+</html>

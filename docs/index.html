@@ -110,6 +110,98 @@
     })
   </script>
 
+  <!-- 悬浮日期小组件 -->
+  <!-- 悬浮日期小组件（无边框版） -->
+  <!--
+  <iframe 
+  src="https://www.widgets.link/#/view/date-07?p=2&bc=%2300000000&tc=%23171717&sm=0&r=16&ff=1&ic=%23171717&bl=5&sl%5B0%5D%5Bho%5D=0&sl%5B0%5D%5Bvo%5D=4&sl%5B0%5D%5Bbr%5D=12&sl%5B0%5D%5Bsr%5D=0&sl%5B0%5D%5Bc%5D=%2300000020&sl%5B1%5D%5Bho%5D=0&sl%5B1%5D%5Bvo%5D=0&sl%5B1%5D%5Bbr%5D=0&sl%5B1%5D%5Bsr%5D=1&sl%5B1%5D%5Bc%5D=%23FFFFFFA3"
+  width="160"
+  height="100"
+  frameborder="0"
+  scrolling="no"
+  style="
+    position: fixed;
+    bottom: 220px;
+    right: 0px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: none;
+    background: transparent !important;
+  ">
+</iframe>
+-->
+
+<!-- 悬浮天气小组件 -->
+<!--
+<iframe 
+  src="https://www.widgets.link/#/view/weather-03?bm=0&bc=%20%23FFFFFF17&tc=%23000000FF&tmc=%231E1E1EFF&tpc=%23090909FF&lc=%23151515FF&ic=%23181818FF&r=28&p=17&ff=1&bl=6&lt=2&ci=101110701&cn=%E5%AE%89%E5%BA%B7&sl%5B0%5D%5Bho%5D=0&sl%5B0%5D%5Bvo%5D=4&sl%5B0%5D%5Bbr%5D=12&sl%5B0%5D%5Bsr%5D=0&sl%5B0%5D%5Bc%5D=%2300000020&sl%5B1%5D%5Bho%5D=0&sl%5B1%5D%5Bvo%5D=0&sl%5B1%5D%5Bbr%5D=0&sl%5B1%5D%5Bsr%5D=1&sl%5B1%5D%5Bc%5D=%23FFFFFFA3"
+  width="120"
+  height="120"
+  frameborder="0"
+  scrolling="no"
+  style="
+    position: fixed;
+    bottom: 80px;
+    right: 7px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: none;
+    background: transparent;
+  ">
+</iframe>
+-->
+
+
+  <!-- 自定义播放器 -->
+<!--
+<iframe 
+  id="playerFrame" 
+  src="assets/player.html" 
+  style="
+    border: none;
+    position: fixed;
+    left: 600px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    z-index: 99999;
+    background: transparent;
+    overflow: hidden;
+  "
+  scrolling="no"
+  allow="autoplay"
+></iframe>
+-->
+
+<!-- 状态同步脚本（确保iframe高度正确，不截断歌单） -->
+<!--
+<script>
+window.addEventListener('message', e => {
+  const f = document.getElementById('playerFrame');
+  if (!f) return;
+  if (e.data === 'mini') {
+    f.style.width = '60px';
+    f.style.height = '60px';
+  }
+  if (e.data === 'expand') {
+    f.style.width = '320px';
+    f.style.height = '60px';
+  }
+  if (e.data === 'list') {
+    f.style.width = '320px';
+    f.style.height = '360px'; // 展开歌单时，iframe高度设为360px，避免截断
+  }
+});
+</script>
+-->
 
 </body>
 </html>
